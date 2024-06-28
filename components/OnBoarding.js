@@ -27,7 +27,7 @@ export default function App() {
                     data={Slides}
                     renderItem={({ item }) => <OnBoardingItem item={ item }/>}
                     horizontal
-                    //showsHorizontalScrollIndicator
+                    showsHorizontalScrollIndicator={false}
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
@@ -40,7 +40,7 @@ export default function App() {
                     ref={slidesRef}
                 />
             </View>
-            <NextButton/>
+            <NextButton percentage={(currentIndex+1)*(100/Slides.length)}/>
         </View>
     );
 }

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   image: {
-    flex: 0.5,
+    flex: 0.8,
     justifyContent: 'center',
   },
   description: {
