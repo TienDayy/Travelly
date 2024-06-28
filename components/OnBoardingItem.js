@@ -6,7 +6,7 @@ export default OnBoardingItem = ({ item }) => {
     return (
         <View style={[styles.container, { width }]}>
             <Image source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]}/>
-            <View style={{ flex: 0.3 }}>
+            <View style={styles.textContainer}>
                 <Text style={styles.description}>{item.description}</Text>
             </View>
         </View>
@@ -17,18 +17,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 80,
   },
   image: {
-    flex: 0.7,
+    flex: 0.5,
     justifyContent: 'center',
   },
   description: {
-    fontWeight: '500',
+    fontFamily: 'Poppins',
     fontSize: 18,
-    marginBottom: 10,
-    color: '#050505',
+    fontWeight: '500',
+    lineHeight: 26,
     textAlign: 'center',
+    color: '#050505',
+    marginTop: 32,
   },
+  textContainer: {
+    marginHorizontal: 66.5,
+  },  
 });

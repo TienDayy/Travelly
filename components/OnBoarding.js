@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Animated } from 'react-native';
 import { useState, useRef } from 'react';
 import OnBoardingItem from './OnBoardingItem';
+import Paginator from './Paginator';
 import Slides from './slides' ;
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
+            <Paginator data={Slides} scrollX={scrollX}/>
             <View style={{ flex: 3 }}>
                 <FlatList
                     data={Slides}
