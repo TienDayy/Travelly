@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Animated } from 'react-native';
 import { useState, useRef } from 'react';
 import OnBoardingItem from './OnBoardingItem';
-import Paginator from './Paginator';
+import NextButton from './NextButton';
+import Paginator from './Paginator'; 
 import Slides from './slides' ;
 
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
                     data={Slides}
                     renderItem={({ item }) => <OnBoardingItem item={ item }/>}
                     horizontal
-                    showsHorizontalScrollIndicator
+                    //showsHorizontalScrollIndicator
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
@@ -39,6 +40,7 @@ export default function App() {
                     ref={slidesRef}
                 />
             </View>
+            <NextButton/>
         </View>
     );
 }
