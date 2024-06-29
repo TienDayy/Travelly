@@ -1,0 +1,35 @@
+{
+    "flights": [
+      {
+        "id": "1",
+        "departure": "Hanoi",
+        "destination": "Ho Chi Minh City",
+        "date": "2024-07-01",
+        "departureTime": "08:00",
+        "arrivalTime": "10:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Booked"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "id": "2",
+        "departure": "Ho Chi Minh City",
+        "destination": "Hanoi",
+        "date": "2024-07-02",
+        "departureTime": "14:00",
+        "arrivalTime": "16:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      }
+    ]
+  }
+  

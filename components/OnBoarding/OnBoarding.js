@@ -1,34 +1,39 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, View, FlatList, Animated } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import OnBoardingItem from './OnBoardingItem';
 import NextButton from './NextButton';
 import Paginator from './Paginator';
 import Slides from './slides';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function App() {
+const OnBoarding = ({ setViewedOnboarding }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
+    const navigation = useNavigation();
 
     const viewableItemsChanged = useRef(({ viewableItems }) => {
-        setCurrentIndex(viewableItems[0].index);
+        if (viewableItems && viewableItems.length > 0) {
+            setCurrentIndex(viewableItems[0].index);
+        }
     }).current;
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
     const scrollTo = async () => {
         if (currentIndex < Slides.length - 1) {
-            slidesRef.current.scrollToIndex({ index: currentIndex + 1});
+            slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
         } else {
             try {
                 await AsyncStorage.setItem('@viewedOnboarding', 'true');
-            } catch(err) {
-                console.log('Error @setItem: ', err); 
-            } 
-
+                setViewedOnboarding(true);
+                navigation.navigate('Home');
+            } catch (err) {
+                console.log('Error @setItem: ', err);
+            }
         }
-    }
+    };
 
     return (
         <View style={styles.container}>
@@ -58,7 +63,7 @@ export default function App() {
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -68,3 +73,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+export default OnBoarding;

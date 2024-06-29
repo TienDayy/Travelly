@@ -1,42 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import OnBoarding from './components/OnBoarding/OnBoarding';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BookingScreen from './components/BookingScreen';
+import TransportBookingScreen from './components/TransportBookingScreen';
+import FeatureNotDeveloped from './components/FeatureNotDeveloped';
+// Import các màn hình khác nếu cần
 
-import HomeScreen from './components/HomeScreen'
-const Loading = () => {
-  return(
-    <View>
-      <ActivityIndicator size="large"/>
-    </View>
-  ); 
-};
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [viewedOnboarding, setViewedOnboarding] = useState(false);
-  
-  const checkOnboarding = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@viewedOnboarding');
-      if (value !== null){
-        setViewedOnboarding(true);
-      }
-    } catch (err) {
-      console.log('Error @checkOnboarding: ', err)
-    } finally {  
-      setLoading(false);
-    } 
-  ;}
-
-  useEffect(() => {
-    checkOnboarding();
-  },[] );
-
   return (
-    <View style={styles.container}>
-      {loading ? <Loading/>: viewedOnboarding ? <HomeScreen/> : <OnBoarding/>}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#F5F5F5',
+            elevation: 0,
+          },
+        }}
+      >
+        <Stack.Screen name="Booking" component={BookingScreen}/>
+        <Stack.Screen name="Trips" component={FeatureNotDeveloped}/>
+        <Stack.Screen name="Hotel" component={FeatureNotDeveloped}/>
+        <Stack.Screen name="Transport" component={TransportBookingScreen}/>
+        <Stack.Screen name="Events" component={FeatureNotDeveloped}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
