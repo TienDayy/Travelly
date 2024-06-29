@@ -4,6 +4,7 @@ import OnBoardingItem from './OnBoardingItem';
 import NextButton from './NextButton';
 import Paginator from './Paginator';
 import Slides from './slides';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,11 +17,16 @@ export default function App() {
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-    const scrollTo = () => {
+    const scrollTo = async () => {
         if (currentIndex < Slides.length - 1) {
             slidesRef.current.scrollToIndex({ index: currentIndex + 1});
         } else {
-            console.log('Last item');
+            try {
+                await AsyncStorage.setItem('@viewedOnboarding', 'true');
+            } catch(err) {
+                console.log('Error @setItem: ', err); 
+            } 
+
         }
     }
 

@@ -1,10 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import OnBoarding from './components/OnBoarding/OnBoarding';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import HomeScreen from './components/HomeScreen'
+const Loading = () => {
+  return(
+    <View>
+      <ActivityIndicator size="large"/>
+    </View>
+  ); 
+};
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [viewedOnboarding, setViewedOnboarding] = useState(false);
+  
+  const checkOnboarding = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@viewedOnboarding');
+      if (value !== null){
+        setViewedOnboarding(true);
+      }
+    } catch (err) {
+      console.log('Error @checkOnboarding: ', err)
+    } finally {  
+      setLoading(false);
+    } 
+  ;}
+
+  useEffect(() => {
+    checkOnboarding();
+  },[] );
+
   return (
     <View style={styles.container}>
-      <OnBoarding/>
+      {loading ? <Loading/>: viewedOnboarding ? <HomeScreen/> : <OnBoarding/>}
     </View>
   );
 }
