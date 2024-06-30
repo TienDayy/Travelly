@@ -1,12 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './components/HomeScreen'
+import BookingScreen from './components/BookingScreen'
+// import Notification from './components/Notification'
+// import AcountScreen from './components/AcountScreen'
+import FeatureNotDeveloped from './components/FeatureNotDeveloped';
 
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-
+        <Tab.Navigator screenOptions={{
+          headerShown: false,
+        }}>
+            <Tab.Screen name="Home" component={HomeScreen}/>
+            <Tab.Screen name="Booking" component={BookingScreen}/>
+            <Tab.Screen name="Notification" component={FeatureNotDeveloped}/>
+            <Tab.Screen name="Acount" component={FeatureNotDeveloped}/>
+        </Tab.Navigator>
     </NavigationContainer>
   );
 }

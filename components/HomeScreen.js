@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image, View, Keyboard, FlatList, TouchableOpacity,TouchableWithoutFeedback ,TextInput } from 'react-native';
 import React from 'react';
+import {StatusBar} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FontLoader from "./FontLoader";
 
 export default function HomeScreen() {
   const clearOnboarding = async () => {
@@ -10,13 +12,55 @@ export default function HomeScreen() {
         console.log('Error @clearOnboarding', err);
     }
   }
-  return (
-    <View style={styles.container}>
-      <Text>Just a Home Screen</Text>
-      <TouchableOpacity onPress={clearOnboarding}>
-        <Text>Reload Onboarding</Text>
-      </TouchableOpacity>
+  const iconsItem = [
+    { id: '1', title: 'Trips', image: require('../assets/images/TripsIcon.png'),},
+    { id: '2', title: 'Hotel', image: require('../assets/images/HotelIcon.png'),},
+    { id: '3', title: 'Transport', image: require('../assets/images/TransportIcon.png'),},
+    { id: '4', title: 'Events', image: require('../assets/images/EventsIcon.png'),},
+  ];
+
+  const IconItem = ({ item }) => (
+    <View style={styles.itemIconContainer}>
+      <Image source={item.image} style={styles.icon} />
+      <Text style={styles.title}>{item.title}</Text>
     </View>
+  );
+
+  return (
+
+    <FontLoader>
+    <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#F5F5F5" barStyle="dark-content" />
+        <Text style={styles.headerStyle}>Explore the beautiful world!</Text>
+        
+        <View style={styles.searchBar}> 
+          <TextInput style={styles.textInputStyle}
+              placeholder='Search'
+              //value={departureInput}
+              //onChangeText={onChangeText}
+          />
+          <Image source={require('../assets/images/SearchIcon.png')} style={styles.searchIcon} />
+        </View>
+
+        <Text style={styles.textStyle}>Booking Services</Text>
+
+        <FlatList
+          data={iconsItem}
+          renderItem={({ item }) => <IconItem item={item} />}
+          keyExtractor={item => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContent}
+       />
+        
+
+        {/* <TouchableOpacity onPress={clearOnboarding}>
+          <Text>Reload Onboarding</Text>
+        </TouchableOpacity> */}
+      </View>
+    </TouchableWithoutFeedback>
+    </FontLoader>
   );
   
 }
@@ -24,8 +68,69 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
+    //marginTop: StatusBar.currentHeight,
+  },
+  headerStyle: {
+    marginTop: StatusBar.currentHeight + 24,
+    fontFamily: 'Poppins-Medium',
+    fontSize: 18,
+    fontWeight: '500',
+    lineHeight: 26,
+    marginLeft: 14,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    height: 40,
     alignItems: 'center',
-    justifyContent: 'center',
+    marginHorizontal: 16,
+    marginTop: 16,
+    backgroundColor: '#FFF',
+    borderRadius: 15,
+    paddingLeft: 10,
+    paddingVertical: 10,
+  },
+  textInputStyle: {
+    width: 305,
+  },
+  searchIcon: {
+    flex: 1,
+    height: 36,
+    resizeMode: 'contain',
+  },
+  textStyle: {
+    marginTop: 24,
+    marginLeft: 16,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+    fontWeight: '400',
+    lineHeight: 22,
+  },
+  flatListContent: {
+    flex: 1,
+    paddingHorizontal: 16,
+    width: 343,
+    height: 82,
+    marginTop: 12,
+    justifyContent: 'space-between',
+  },
+  itemContainer: {
+    alignItems: 'center',
+  },
+  icon: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
+  },
+  title: {
+    marginTop: 5,
+    fontSize: 14,
+    width: 60,
+    textAlign: 'center',
+    color: '#000',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 12,
+    fontWeight: '400',
+    lineHeight: 18,
   },
 });
