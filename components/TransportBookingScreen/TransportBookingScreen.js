@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, Platform, TouchableWithoutFeedback, Keyboard, T
 import SearchLocationBar from './SearchLocationBar';
 import { useNavigation } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
+import Header from '../Header';
 
 
 export default function TransportBookingScreen() {
@@ -12,20 +13,10 @@ export default function TransportBookingScreen() {
   const navigation = useNavigation();
 
   return (
-    <FontLoader>
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
 
-        <View style={styles.header}>
-          <AntDesign
-            name={"left"}
-            size={24}
-            color="black"
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.headerText}>Transport Booking</Text>
-        </View>
-
+        <Header title="Transport Booking" />
 
         <SearchLocationBar/>
         <View style={styles.textContainer}>
@@ -33,7 +24,6 @@ export default function TransportBookingScreen() {
         </View>
       </View>
     </TouchableWithoutFeedback>
-    </FontLoader>
   );
 };
 
@@ -49,23 +39,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
-  },
-  header: {
-    marginTop: StatusBar.currentHeight + 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-  backIcon: {
-    position: 'absolute',
-    left: 16,
-  },
-  headerText: {
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 18,
-    fontWeight: '600',
-    lineHeight: 26,
-    textAlign: 'center',
-    flex: 1,
   },
 });

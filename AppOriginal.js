@@ -1,9 +1,7 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './components/HomeScreen'
 import BookingScreen from './components/BookingScreen'
 // import Notification from './components/Notification'
