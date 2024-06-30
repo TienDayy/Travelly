@@ -1,62 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, TextInput, FlatList } from 'react-native';
-import data from '../assets/data/dataFlights.json'; // Đường dẫn tới file JSON
+import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import data from '../../assets/data/dataFlights.json'; // Đường dẫn tới file JSON
 
-const TransportBooking = () => {
+const SearchLocationBar = () => {
   const [departureInput, setDepartureInput] = useState('');
   const [filteredDepartures, setFilteredDepartures] = useState([]);
   const [showFlatList, setShowFlatList] = useState(false); // State để kiểm soát hiển thị FlatList
+  const [uniqueDepartures, setUniqueDepartures] = useState([]); // State để lưu danh sách departure duy nhất
 
   useEffect(() => {
-    // Khởi tạo danh sách các departure khi component được load
-    const allDepartures = data.flights.map(flight => flight.departure);
+    // Khởi tạo danh sách các departure duy nhất khi component được load
+    const allDepartures = Array.from(new Set(data.flights.map(flight => flight.departure))).sort((a, b) => a.localeCompare(b));
+    setUniqueDepartures(allDepartures);
     setFilteredDepartures(allDepartures);
   }, []);
 
   const onChangeText = (text) => {
     setDepartureInput(text);
     // Filter danh sách các departure dựa trên input của người dùng
-    const filteredDepartures = data.flights.filter(flight =>
-      flight.departure.toLowerCase().includes(text.toLowerCase())
-    ).map(flight => flight.departure);
+    const filteredDepartures = uniqueDepartures.filter(departure =>
+      departure.toLowerCase().includes(text.toLowerCase())
+    );
     setFilteredDepartures(filteredDepartures);
-    setShowFlatList(true); // Hiển thị FlatList khi có input
+    setShowFlatList(true); // Hiển thị FlatList khi có 
+  }
+
+  const handleItemPress = (item) => {
+    setDepartureInput(item);
+    setShowFlatList(false); // Ẩn FlatList sau khi chọn item
+    Keyboard.dismiss();
   }
 
   const renderItem = ({ item }) => (
-    <Text style={styles.item}>{item}</Text>
+    <TouchableOpacity onPress={() => handleItemPress(item)} key={item}>
+      <Text style={styles.item}>{item}</Text>
+    </TouchableOpacity>
   );
 
   const hideFlatList = () => {
     setShowFlatList(false); // Ẩn FlatList khi không có input
+    Keyboard.dismiss();
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={styles.container}>
+    //<TouchableWithoutFeedback onPress={hideFlatList}>
+      <View style={styles.container}>
         <TextInput
           placeholder='Find Location'
           value={departureInput}
           onChangeText={onChangeText}
+          //onBlur={hideFlatList}// Ẩn FlatList khi TextInput mất focus
           onFocus={() => setShowFlatList(true)} // Hiển thị FlatList khi TextInput được focus
-          onBlur={hideFlatList} // Ẩn FlatList khi TextInput mất focus
           style={styles.textInputStyle}
         />
         {showFlatList && (
           <FlatList
             data={filteredDepartures}
-            renderItem={renderItem}
+            renderItem={renderItem}       
             keyExtractor={(item, index) => index.toString()}
           />
         )}
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      </View>
+    //</TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     backgroundColor: '#F5F5F5',
   },
   textInputStyle: {
@@ -76,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TransportBooking;
+export default SearchLocationBar;

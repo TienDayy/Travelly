@@ -29,6 +29,81 @@
           {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
           // Add 19 more Economy class seats
         ]
+      },
+      {
+        "id": "3",
+        "departure": "Ho Chi Minh City",
+        "destination": "Hanoi",
+        "date": "2024-07-02",
+        "departureTime": "18:00",
+        "arrivalTime": "20:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "id": "4",
+        "departure": "Ho Chi Minh City",
+        "destination": "Hanoi",
+        "date": "2024-07-02",
+        "departureTime": "7:00",
+        "arrivalTime": "9:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "id": "5",
+        "departure": "Bangkok (BKK)",
+        "destination": "Singapore (SIN)",
+        "date": "2024-07-02",
+        "departureTime": "7:00",
+        "arrivalTime": "10:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "id": "6",
+        "departure": "Paris (CDG)",
+        "destination": "Hanoi",
+        "date": "2024-07-02",
+        "departureTime": "8:00",
+        "arrivalTime": "20:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "id": "7",
+        "departure": "San Francisco (SFO)",
+        "destination": "Hanoi",
+        "date": "2024-07-02",
+        "departureTime": "11:00",
+        "arrivalTime": "13:00",
+        "seats": [
+          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
       }
     ]
   }
