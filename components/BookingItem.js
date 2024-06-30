@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    marginVertical: 8,
+    //marginVertical: 8,
   },
   leftCircle: {
     width: 24,

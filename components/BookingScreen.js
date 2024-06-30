@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: StatusBar.currentHeight + 16,
   },
   headerStyle: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 18,
     fontWeight: '600',
     lineHeight: 26,
-    marginBottom: 24,
+    marginTop: StatusBar.currentHeight + 8,
+    marginBottom: 16,
   },
 });
 
