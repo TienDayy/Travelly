@@ -7,6 +7,7 @@ import BookingScreen from './components/BookingScreen'
 // import Notification from './components/Notification'
 // import AcountScreen from './components/AcountScreen'
 import FeatureNotDeveloped from './components/FeatureNotDeveloped';
+import BookingStack from './BookingStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ export default function App() {
           headerShown: false,
         }}>
             <Tab.Screen name="Home" component={HomeScreen}/>
-            <Tab.Screen name="Booking" component={BookingScreen}/>
+            <Tab.Screen name="BookingStack" component={BookingStack}/>
             <Tab.Screen name="Notification" component={FeatureNotDeveloped}/>
             <Tab.Screen name="Acount" component={FeatureNotDeveloped}/>
         </Tab.Navigator>

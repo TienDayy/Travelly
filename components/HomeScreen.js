@@ -3,6 +3,7 @@ import React from 'react';
 import {StatusBar} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontLoader from "./FontLoader";
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
   const clearOnboarding = async () => {
@@ -12,6 +13,9 @@ export default function HomeScreen() {
         console.log('Error @clearOnboarding', err);
     }
   }
+
+  const navigation = useNavigation();
+
   const iconsItem = [
     { id: '1', title: 'Trips', image: require('../assets/images/TripsIcon.png'),},
     { id: '2', title: 'Hotel', image: require('../assets/images/HotelIcon.png'),},
@@ -20,10 +24,10 @@ export default function HomeScreen() {
   ];
 
   const IconItem = ({ item }) => (
-    <View style={styles.itemIconContainer}>
+    <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('BookingStack')}>
       <Image source={item.image} style={styles.icon} />
       <Text style={styles.title}>{item.title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -113,9 +117,6 @@ const styles = StyleSheet.create({
     height: 82,
     marginTop: 12,
     justifyContent: 'space-between',
-  },
-  itemContainer: {
-    alignItems: 'center',
   },
   icon: {
     width: 60,

@@ -24,7 +24,6 @@ const BookingScreen = () => {
         renderItem={({ item }) => <BookingItem item={item} navigation={navigation}/>}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingVertical: 20 }}
       />
     </View>
     </FontLoader>
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     lineHeight: 26,
+    marginBottom: 24,
   },
 });
 
