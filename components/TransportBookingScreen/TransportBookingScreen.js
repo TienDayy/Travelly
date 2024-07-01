@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert, TouchableOpacity } from 'react-native';
 import Header from '../Header';
 import SearchDepartureBar from './SearchDepartureBar';
 import SearchArrivalBar from './SearchArrivalBar';
@@ -11,7 +11,7 @@ import ChooseTransport from './ChooseTransport';
 import { useNavigation } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
 import { SelectedTransport } from './ChooseTransport';
-
+import { Departure, Arrival } from './ChooseDeparture&Arrival';
 
 export default function TransportBookingScreen() {
 
@@ -54,7 +54,10 @@ export default function TransportBookingScreen() {
             style={styles.searchButton}
             onPress={() => {
               if (SelectedTransport.value === '1') {
-                navigation.navigate("TransportFlightsScreen");
+                if(Departure.value && Arrival.value){
+                  navigation.navigate("TransportFlightsScreen");
+                } else {
+                  Alert.alert("Sorry !","Please select your Departure and Arrival");}
               } else {
                 navigation.navigate("FeatureNotDeveloped");
               }
