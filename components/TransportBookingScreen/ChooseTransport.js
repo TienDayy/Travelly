@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+
+// Tạo một đối tượng để lưu trữ giá trị của selectedId
+export const SelectedTransport = {
+  value: '1',
+};
 
 const ChooseTransport = () => {
     const [selectedId, setSelectedId] = useState('1');
+
+    useEffect(() => {
+        SelectedTransport.value = selectedId;
+    }, [selectedId]);
+
     const iconsItem = [
         { id: '1', image: require('../../assets/images/AirplaneIcon.png'), },
         { id: '2', image: require('../../assets/images/BoatIcon.png'), },

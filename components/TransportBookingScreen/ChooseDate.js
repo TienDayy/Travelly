@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontLoader from '../FontLoader';
 
+export const DepartureDate = {
+  value: new Date()
+};
+export const ReturnDate = {
+  value: new Date()
+};
+
 const ChooseDate = () => {
+
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
   const [showDeparturePicker, setShowDeparturePicker] = useState(false);
   const [showReturnPicker, setShowReturnPicker] = useState(false);
+
+  useEffect(() => {
+    DepartureDate.value = departureDate;
+  }, [departureDate]);
+  useEffect(() => {
+    ReturnDate.value = returnDate;
+  }, [returnDate]);
 
   const onChangeDeparture = (event, selectedDate) => {
     const currentDate = selectedDate || departureDate;

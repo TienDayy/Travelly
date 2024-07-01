@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, Image, TouchableOpaci
 import Header from '../Header';
 import SearchDepartureBar from './SearchDepartureBar';
 import SearchArrivalBar from './SearchArrivalBar';
+import ChooseDepartureAndArrival from './ChooseDeparture&Arrival';
 import ChooseDate from './ChooseDate';
 import PassengerAndLuggage from './Passenger&Luggage';
 import Class from './Class';
 import ChooseTransport from './ChooseTransport';
 import { useNavigation } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
-
+import { SelectedTransport } from './ChooseTransport';
 
 
 export default function TransportBookingScreen() {
@@ -19,7 +20,7 @@ export default function TransportBookingScreen() {
 
   const handleTouchablePress = () => {
     if (searchBarRef.current) {
-      searchBarRef.current.hideFlatList();
+      searchBarRef.current.hideFlatLists();
     }
   };
 
@@ -32,12 +33,13 @@ export default function TransportBookingScreen() {
         
         <Header title="Transport Booking" />
         
-          <SearchDepartureBar ref={searchBarRef}/>
-          <SearchArrivalBar ref={searchBarRef}/>
+          {/* <SearchDepartureBar ref={searchBarRef}/>
+          <SearchArrivalBar ref={searchBarRef}/> */}
+          <ChooseDepartureAndArrival ref={searchBarRef}/>
 
-          <TouchableOpacity style={styles.swapIcon}>
+          {/* <TouchableOpacity style={styles.swapIcon}>
             <Image source={require('../../assets/images/SwapIcon.png')} style={{width: 40, height: 40, resizeMode: 'contain'}}/>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <ChooseDate/>
 
@@ -48,10 +50,18 @@ export default function TransportBookingScreen() {
           <ChooseTransport/>
           
           
-          <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={() => {
+              if (SelectedTransport.value === '1') {
+                navigation.navigate("TransportFlightsScreen");
+              } else {
+                navigation.navigate("FeatureNotDeveloped");
+              }
+          }}>
           <FontLoader>
             <Text style={styles.searchTextStyle}>Search</Text>
-          </FontLoader>
+          </FontLoader> 
           </TouchableOpacity>
         
      </View>

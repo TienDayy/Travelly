@@ -3,6 +3,13 @@ import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Keyboard
 import data from '../../assets/data/dataFlights.json';
 import FontLoader from '../FontLoader';
 
+export const Departure = {
+    value: '',
+};
+export const Arrival = {
+    value: '',
+};
+
 const ChooseDepartureAndArrival = forwardRef((props, ref) => {
   const [departureInput, setDepartureInput] = useState('');
   const [arrivalInput, setArrivalInput] = useState('');
@@ -12,6 +19,14 @@ const ChooseDepartureAndArrival = forwardRef((props, ref) => {
   const [showArrivalFlatList, setShowArrivalFlatList] = useState(false);
   const [uniqueDepartures, setUniqueDepartures] = useState([]);
   const [uniqueArrivals, setUniqueArrivals] = useState([]);
+
+  useEffect(() => {
+    Departure.value = departureInput;
+  }, [departureInput]);
+
+  useEffect(() => {
+    Arrival.value = arrivalInput;
+  }, [arrivalInput]);
 
   useEffect(() => {
     const allDepartures = Array.from(new Set(data.flights.map(flight => flight.departure))).sort((a, b) => a.localeCompare(b));
@@ -82,21 +97,7 @@ const ChooseDepartureAndArrival = forwardRef((props, ref) => {
               onFocus={() => setShowDepartureFlatList(true)}
             />
           </View>
-          <TouchableOpacity style={styles.swapIcon} onPress={handleSwapPress}>
-            <Image source={require('../../assets/images/SwapIcon.png')} style={{width: 40, height: 40, resizeMode: 'contain'}}/>
-          </TouchableOpacity>
-          <View style={styles.textInputStyle}>
-            <Text style={styles.fromStyle}>To</Text>
-            <TextInput
-              style={styles.placeHolder}
-              placeholder='Find Arrival'
-              value={arrivalInput}
-              onChangeText={onArrivalChangeText}
-              onFocus={() => setShowArrivalFlatList(true)}
-            />
-          </View>
-        </View>
-        {showDepartureFlatList && (
+          {showDepartureFlatList && (
           <FlatList
             data={filteredDepartures}
             renderItem={({ item }) => (
@@ -113,6 +114,21 @@ const ChooseDepartureAndArrival = forwardRef((props, ref) => {
             keyExtractor={(item, index) => index.toString()}
           />
         )}
+          <TouchableOpacity style={styles.swapIcon} onPress={handleSwapPress}>
+            <Image source={require('../../assets/images/SwapIcon.png')} style={{width: 40, height: 40, resizeMode: 'contain'}}/>
+          </TouchableOpacity>
+          <View style={styles.textInputStyle}>
+            <Text style={styles.fromStyle}>To</Text>
+            <TextInput
+              style={styles.placeHolder}
+              placeholder='Find Arrival'
+              value={arrivalInput}
+              onChangeText={onArrivalChangeText}
+              onFocus={() => setShowArrivalFlatList(true)}
+            />
+          </View>
+        </View>
+
         {showArrivalFlatList && (
           <FlatList
             data={filteredArrivals}
@@ -136,54 +152,49 @@ const ChooseDepartureAndArrival = forwardRef((props, ref) => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5F5F5',
-    paddingTop: 16,
-  },
-  textInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  textInputStyle: {
-    flex: 1,
-    height: 54,
-    backgroundColor: '#FFF',
-    borderRadius: 15,
-    paddingHorizontal: 16,
-    marginBottom: 8,
-  },
-  item: {
-    backgroundColor: '#FFF',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#DDD',
-    fontFamily: 'Poppins-Regular',
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 20,
-  },
-  fromStyle: {
-    color: '#727272',
-    fontFamily: 'Poppins-Regular',
-    fontSize: 10,
-    fontWeight: '400',
-    lineHeight: 16,
-    marginTop: 5,
-  },
-  placeHolder: {
-    fontFamily: 'Poppins-Regular',
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 22,
-    marginBottom: 8,
-  },
-  swapIcon: {
-    position: 'absolute',
-    top: 18,
-    right: 16,
-    zIndex: 1,
-  },
+    container: {
+        backgroundColor: '#F5F5F5',
+        marginTop: 10,
+      },
+      textInputStyle: {
+        height: 54,
+        marginHorizontal: 16,
+        marginTop: 8,
+        backgroundColor: '#FFF',
+        borderRadius: 15,
+        paddingHorizontal: 16,
+      },
+      item: {
+        backgroundColor: '#FFF',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DDD',
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        fontWeight: '400',
+        lineHeight: 20,
+      },
+      fromStyle: {
+        color: '#727272',
+        fontFamily: 'Poppins-Regular',
+        fontSize: 10,
+        fontWeight: '400',
+        lineHeight: 16,
+        marginTop: 5,
+      },
+      placeHolder: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 16,
+        fontWeight: '400',
+        lineHeight: 22,
+        marginBottom: 8,
+      },
+      swapIcon: {
+        position: 'absolute',
+        top: 46,
+        right: 48,
+        zIndex: 1,
+      },
 });
 
 export default ChooseDepartureAndArrival;

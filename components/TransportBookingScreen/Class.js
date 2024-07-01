@@ -1,51 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FontLoader from '../FontLoader';
+
+// Tạo một đối tượng để lưu trữ giá trị của selectedButton
+export const SelectedClass = {
+  value: 'Economy',
+};
 
 const App = () => {
   const [selectedButton, setSelectedButton] = useState('Economy');
 
+  useEffect(() => {
+    SelectedClass.value = selectedButton;
+  }, [selectedButton]);
+
   return (
     <View style={styles.container}>
-        <Text style={styles.TitleStyle}>Class</Text>
-        
-        <View style={styles.buttonContainer}>
+      <Text style={styles.TitleStyle}>Class</Text>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
-            style={[
+          style={[
             styles.button,
             selectedButton === 'Economy' ? styles.activeButton : styles.inactiveButton,
-            ]}
-            onPress={() => setSelectedButton('Economy')}
-            activeOpacity={0.3}
+          ]}
+          onPress={() => setSelectedButton('Economy')}
+          activeOpacity={0.3}
         >
-            <Text
+          <Text
             style={[
-                styles.buttonText,
-                selectedButton === 'Economy' ? styles.activeText : styles.inactiveText,
+              styles.buttonText,
+              selectedButton === 'Economy' ? styles.activeText : styles.inactiveText,
             ]}
-            >
+          >
             Economy
-            </Text>
+          </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
-            style={[
+          style={[
             styles.button,
             selectedButton === 'Business' ? styles.activeButton : styles.inactiveButton,
-            ]}
-            onPress={() => setSelectedButton('Business')}
-            activeOpacity={0.3}
+          ]}
+          onPress={() => setSelectedButton('Business')}
+          activeOpacity={0.3}
         >
-            <Text
+          <Text
             style={[
-                styles.buttonText,
-                selectedButton === 'Business' ? styles.activeText : styles.inactiveText,
+              styles.buttonText,
+              selectedButton === 'Business' ? styles.activeText : styles.inactiveText,
             ]}
-            >
+          >
             Business
-            </Text>
+          </Text>
         </TouchableOpacity>
-        </View>
+      </View>
     </View>
   );
 };

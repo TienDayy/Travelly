@@ -75,7 +75,7 @@ export default function App() {
                     position: 'absolute',
                     borderTopRightRadius: 20,
                     borderTopLeftRadius: 20,
-                }
+                },     
             }}>
                 {TabArr.map((item, index) => {
                     return (
