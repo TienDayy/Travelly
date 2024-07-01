@@ -68,6 +68,7 @@ const SearchArrivalBar = forwardRef((props, ref) => {
           data={filteredArrivals}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
+          style={{marginTop: 4}}
         />
       )}
     </View>

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {StatusBar} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { View, Text, StyleSheet, Platform, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Image, TouchableOpacity } from 'react-native';
 import SearchDepartureBar from './SearchDepartureBar';
 import SearchArrivalBar from './SearchArrivalBar';
+import ChooseDate from './ChooseDate';
 import { useNavigation } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
 import Header from '../Header';
@@ -12,6 +13,7 @@ import Header from '../Header';
 export default function TransportBookingScreen() {
 
   const navigation = useNavigation();
+
 
   const handleTouchablePress = () => {
     if (searchBarRef.current) {
@@ -24,15 +26,17 @@ export default function TransportBookingScreen() {
   return (
     <TouchableWithoutFeedback onPress={handleTouchablePress}>
       <View style={styles.container}>
-
+        
         <Header title="Transport Booking" />
+        
+          <SearchDepartureBar ref={searchBarRef}/>
+          <SearchArrivalBar ref={searchBarRef}/>
 
-        <SearchDepartureBar ref={searchBarRef}/>
-        <SearchArrivalBar ref={searchBarRef}/>
-        {/* <View style={styles.textContainer}>
-          <Text style={styles.textStyle}>Tien</Text>
-        </View> */}
-      </View>
+          <TouchableOpacity style={styles.swapIcon}>
+            <Image source={require('../../assets/images/SwapIcon.png')} style={{width: 40, height: 40, resizeMode: 'contain'}}/>
+          </TouchableOpacity>
+          <ChooseDate/>
+     </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -49,5 +53,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+  },
+  swapIcon: {
+    position: 'absolute',
+    top: 122,
+    right: 48,
+    zIndex: 1,
   },
 });
