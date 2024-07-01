@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {StatusBar} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Platform, TouchableWithoutFeedback, Keyboard, TextInput, FlatList, KeyboardAvoidingView } from 'react-native';
-import SearchLocationBar from './SearchLocationBar';
+import SearchDepartureBar from './SearchDepartureBar';
+import SearchArrivalBar from './SearchArrivalBar';
 import { useNavigation } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
 import Header from '../Header';
@@ -12,16 +13,25 @@ export default function TransportBookingScreen() {
 
   const navigation = useNavigation();
 
+  const handleTouchablePress = () => {
+    if (searchBarRef.current) {
+      searchBarRef.current.hideFlatList();
+    }
+  };
+
+  const searchBarRef = React.useRef(null);
+
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={handleTouchablePress}>
       <View style={styles.container}>
 
         <Header title="Transport Booking" />
 
-        <SearchLocationBar/>
-        <View style={styles.textContainer}>
+        <SearchDepartureBar ref={searchBarRef}/>
+        <SearchArrivalBar ref={searchBarRef}/>
+        {/* <View style={styles.textContainer}>
           <Text style={styles.textStyle}>Tien</Text>
-        </View>
+        </View> */}
       </View>
     </TouchableWithoutFeedback>
   );
