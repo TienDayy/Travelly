@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Header from './Header'
 
 const FeatureNotDeveloped = () => {
   return (
     <View style={styles.container}>
+      <Header title="" />
       <Text style={styles.text}>This feature is not yet developed.</Text>
     </View>
   );
@@ -11,8 +13,6 @@ const FeatureNotDeveloped = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
     padding: 20,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#01635D',
     textAlign: 'center',
-    margin: 20,
+    marginTop: 200,
     borderWidth: 2,
     borderColor: '#01635D',
     padding: 20,

@@ -1,11 +1,14 @@
-import { StyleSheet, Text, Image, View, Keyboard, FlatList, TouchableOpacity,TouchableWithoutFeedback ,TextInput } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, Image, View, Keyboard, FlatList, TouchableOpacity,TouchableWithoutFeedback ,TextInput, Modal, Pressable } from 'react-native';
+import React, {useState} from 'react';
 import {StatusBar} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontLoader from "./FontLoader";
 import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const [searchText, setSearchText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
   const clearOnboarding = async () => {
     try {
         await AsyncStorage.removeItem('@viewedOnboarding');
@@ -41,10 +44,12 @@ export default function HomeScreen() {
         <View style={styles.searchBar}> 
           <TextInput style={styles.textInputStyle}
               placeholder='Search'
-              //value={departureInput}
-              //onChangeText={onChangeText}
+              value={searchText}
+              onChangeText={setSearchText}
           />
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Image source={require('../assets/images/SearchIcon.png')} style={styles.searchIcon} />
+          </TouchableOpacity>
         </View>
 
         <Text style={styles.textStyle}>Booking Services</Text>
@@ -58,10 +63,25 @@ export default function HomeScreen() {
           contentContainerStyle={styles.flatListContent}
        />
         
-
-        {/* <TouchableOpacity onPress={clearOnboarding}>
-          <Text>Reload Onboarding</Text>
-        </TouchableOpacity> */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Search Text: {searchText}</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.modalText}>Close</Text>
+                </Pressable>
+              </View>
+            </View>
+        </Modal>
+        
       </View>
     </TouchableWithoutFeedback>
     </FontLoader>
@@ -92,14 +112,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 15,
     paddingLeft: 10,
-    paddingVertical: 10,
+    justifyContent: 'center',
   },
   textInputStyle: {
     width: 305,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 22,
   },
   searchIcon: {
     flex: 1,
     height: 36,
+    width: 36,
     resizeMode: 'contain',
   },
   textStyle: {
@@ -133,5 +158,35 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     lineHeight: 18,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 50,
+    paddingVertical: 20,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    elevation: 2,
+  },
+  buttonClose: {
+    marginTop: 8,
+    backgroundColor: '#2196F3',
+  },
+  modalText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 22,
   },
 });

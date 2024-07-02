@@ -11,12 +11,13 @@ import BookingScreen from './components/BookingScreen';
 // import AcountScreen from './components/AcountScreen'
 import FeatureNotDeveloped from './components/FeatureNotDeveloped';
 import BookingStack from './BookingStack';
+import AccountStack from  './AccountStack'
 
 const TabArr = [
     { route: 'Home', label: 'Home', image: require('./assets/images/HomeIcon.png'), component: HomeScreen, color: '#FFDDA2' },
     { route: 'BookingStack', label: 'Booking', image: require('./assets/images/BookingIcon.png'), component: BookingStack, color: '#FFDDA2' },
     { route: 'Notification', label: 'Notification', image: require('./assets/images/NotificationIcon.png'), component: FeatureNotDeveloped, color: '#FFDDA2' },
-    { route: 'Account', label: 'Account', image: require('./assets/images/AccountIcon.png'), component: FeatureNotDeveloped, color: '#FFDDA2' },
+    { route: 'AccountStack', label: 'Account', image: require('./assets/images/AccountIcon.png'), component: AccountStack, color: '#FFDDA2' },
 ];
 
 const Tab = createBottomTabNavigator();

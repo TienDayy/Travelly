@@ -24,6 +24,7 @@ const BookingScreen = () => {
         renderItem={({ item }) => <BookingItem item={item} navigation={navigation}/>}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{paddingBottom: 70}}
       />
     </View>
     </FontLoader>
