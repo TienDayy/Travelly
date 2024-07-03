@@ -1,110 +1,262 @@
 {
     "flights": [
       {
-        "id": "1",
-        "departure": "Hanoi",
-        "destination": "Ho Chi Minh City",
+        "number": "HH-01",
+        "departure": "Ha Noi (HN)",
+        "destination": "Ho Chi Minh (HCM)",
         "date": "2024-07-01",
-        "departureTime": "08:00",
-        "arrivalTime": "10:00",
+        "departureTime": "8:00 AM",
+        "arrivalTime": "10:00 AM",
+        "class": "Economy",
+        "price": 40,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Booked"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
-          // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 1, "column": "A", "status": "Booked"},
+          {"row": 1, "column": "B", "status": "Booked"},
+          {"row": 1, "column": "C", "status": "Booked"},
+          {"row": 1, "column": "D", "status": "Available"},
+          {"row": 2, "column": "A", "status": "Booked"},
+          {"row": 2, "column": "B", "status": "Booked"},
+          {"row": 2, "column": "C", "status": "Available"},
+          {"row": 2, "column": "D", "status": "Available"},
+          {"row": 3, "column": "A", "status": "Booked"},
+          {"row": 3, "column": "B", "status": "Available"},
+          {"row": 3, "column": "C", "status": "Available"},
+          {"row": 3, "column": "D", "status": "Available"},
+          {"row": 4, "column": "A", "status": "Available"},
+          {"row": 4, "column": "B", "status": "Available"},
+          {"row": 4, "column": "C", "status": "Available"},
+          {"row": 4, "column": "D", "status": "Available"},
+          {"row": 5, "column": "A", "status": "Available"},
+          {"row": 5, "column": "B", "status": "Available"},
+          {"row": 5, "column": "C", "status": "Available"},
+          {"row": 5, "column": "D", "status": "Available"},
+
+          //{"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "2",
-        "departure": "Ho Chi Minh City",
-        "destination": "Hanoi",
+        "number": "HH-02",
+        "departure": "Ho Chi Minh (HCM)",
+        "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
-        "departureTime": "14:00",
-        "arrivalTime": "16:00",
+        "departureTime": "2:00 PM",
+        "arrivalTime": "4:00 PM",
+        "class": "Economy",
+        "price": 40,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "3",
-        "departure": "Ho Chi Minh City",
-        "destination": "Hanoi",
+        "number": "HH-03",
+        "departure": "Ho Chi Minh (HCM)",
+        "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
-        "departureTime": "18:00",
-        "arrivalTime": "20:00",
+        "departureTime": "6:00 PM",
+        "arrivalTime": "8:00 PM",
+        "class": "Economy",
+        "price": 40,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "4",
-        "departure": "Ho Chi Minh City",
-        "destination": "Hanoi",
+        "number": "HH-04",
+        "departure": "Ho Chi Minh (HCM)",
+        "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
-        "departureTime": "7:00",
-        "arrivalTime": "9:00",
+        "departureTime": "7:00 AM",
+        "arrivalTime": "9:00 AM",
+        "class": "Economy",
+        "price": 40,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "5",
+        "number": "BS-01",
         "departure": "Bangkok (BKK)",
         "destination": "Singapore (SIN)",
         "date": "2024-07-02",
-        "departureTime": "7:00",
-        "arrivalTime": "10:00",
+        "departureTime": "7:00 AM",
+        "arrivalTime": "10:00 AM",
+        "class": "Economy",
+        "price": 45,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "6",
+        "number": "PH-01",
         "departure": "Paris (CDG)",
-        "destination": "Hanoi",
+        "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
-        "departureTime": "8:00",
-        "arrivalTime": "20:00",
+        "departureTime": "8:00 AM",
+        "arrivalTime": "8:00 PM",
+        "class": "Economy",
+        "price": 366,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       },
       {
-        "id": "7",
+        "number": "SH-01",
         "departure": "San Francisco (SFO)",
-        "destination": "Hanoi",
+        "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
-        "departureTime": "11:00",
-        "arrivalTime": "13:00",
+        "departureTime": "11:00 AM",
+        "arrivalTime": "1:00 PM",
+        "class": "Economy",
+        "price": 410,
         "seats": [
-          {"row": 1, "column": "A", "class": "Business", "status": "Available"},
-          {"row": 1, "column": "B", "class": "Business", "status": "Available"},
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
           // Add 18 more Business class seats
-          {"row": 20, "column": "D", "class": "Economy", "status": "Available"}
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "LD-02",
+        "departure": "London (LHR)",
+        "destination": "Dubai (DXB)",
+        "date": "2024-07-03",
+        "departureTime": "9:00 AM",
+        "arrivalTime": "7:00 PM",
+        "class": "Economy",
+        "price": 300,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "LD-01",
+        "departure": "London (LHR)",
+        "destination": "Dubai (DXB)",
+        "date": "2024-07-03",
+        "departureTime": "5:00 AM",
+        "arrivalTime": "3:00 PM",
+        "class": "Economy",
+        "price": 300,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "LD-03",
+        "departure": "London (LHR)",
+        "destination": "Dubai (DXB)",
+        "date": "2024-07-03",
+        "departureTime": "8:00 PM",
+        "arrivalTime": "6:00 AM",
+        "class": "Economy",
+        "price": 300,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "NT-01",
+        "departure": "New York (JFK)",
+        "destination": "Tokyo (NRT)",
+        "date": "2024-07-04",
+        "departureTime": "6:00 AM",
+        "arrivalTime": "8:00 PM",
+        "class": "Economy",
+        "price": 450,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "SY-01",
+        "departure": "Sydney (SYD)",
+        "destination": "Los Angeles (LAX)",
+        "date": "2024-07-05",
+        "departureTime": "10:00 AM",
+        "arrivalTime": "6:00 AM",
+        "class": "Economy",
+        "price": 500,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "SY-02",
+        "departure": "Sydney (SYD)",
+        "destination": "Los Angeles (LAX)",
+        "date": "2024-07-05",
+        "departureTime": "5:00 PM",
+        "arrivalTime": "11:00 AM",
+        "class": "Economy",
+        "price": 500,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "SY-18",
+        "departure": "Sydney (SYD)",
+        "destination": "Los Angeles (LAX)",
+        "date": "2024-07-07",
+        "departureTime": "5:00 PM",
+        "arrivalTime": "11:00 AM",
+        "class": "Economy",
+        "price": 500,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
           // Add 19 more Economy class seats
         ]
       }
+      
     ]
   }
   

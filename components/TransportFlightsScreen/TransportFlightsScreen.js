@@ -11,6 +11,8 @@ import { SelectedClass } from '../TransportBookingScreen/Class';
 import { SelectedTransport } from '../TransportBookingScreen/ChooseTransport';
 import { Departure, Arrival } from '../TransportBookingScreen/ChooseDeparture&Arrival';
 
+const flightsData = require('../../assets/data/dataFlights.json');
+
 export default function TransportFlightScreen() {
 
   const [selectedDate, setSelectedDate] = useState(DepartureDate.value);
@@ -35,12 +37,13 @@ export default function TransportFlightScreen() {
 const splitCity = (str) => {
   const insideParenthesesMatch = str.match(/\((.*?)\)/);
   const insideParentheses = insideParenthesesMatch ? insideParenthesesMatch[1] : '';
-  
+
   // Tách phần ngoài ngoặc
-  const outsideParentheses = insideParenthesesMatch ? str.split(' ')[0] : str;
+  const outsideParentheses = insideParenthesesMatch ? str.substring(0, insideParenthesesMatch.index).trim() : str;
 
   return { inside: insideParentheses, outside: outsideParentheses };
 };
+
 
 // Hàm tạo mảng các ngày từ DepartureDate đến ReturnDate
   const generateDateRange = (startDate, endDate) => {
@@ -58,7 +61,20 @@ const splitCity = (str) => {
   const departureData = splitCity(Departure.value);
   const arrivalData = splitCity(Arrival.value);
 
-// Render item
+// Tìm các chuyến bay phù hợp
+
+  const flightsArr = flightsData.flights.filter(flight =>
+    flight.departure === Departure.value &&
+    flight.destination === Arrival.value &&
+    moment(flight.date).isSame(moment(selectedDate), 'day') &&
+    flight.class === SelectedClass.value
+  ).sort((a, b) => {
+    const timeA = moment(a.departureTime, 'hh:mm A');
+    const timeB = moment(b.departureTime, 'hh:mm A');
+    return timeA - timeB;
+  });
+
+// Render date item
   const DateItem = ({date, isSelected, onPress}) => {
     return (
       <TouchableOpacity
@@ -72,7 +88,58 @@ const splitCity = (str) => {
     );
   };
 
+// Render ticket box item
+  const renderFlightItem = ({ item }) => (
+    <View style={styles.flightContainer}>
+
+      <View style={styles.locationBox}>
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>{departureData.inside}</Text>
+            <Text style={styles.textLarge}>{departureData.outside}</Text>
+          </View>
+    
+          <Image source={require('../../assets/images/FlightingIcon.png')} style={{width: 130, height: 24, marginTop: 14}}/>
+        
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>{arrivalData.inside}</Text>
+            <Text style={styles.textLarge}>{arrivalData.outside}</Text>
+          </View>
+      </View>
+    
+      <View style={styles.dividerContainer}>
+        <View style={styles.leftCircle}></View>
+        <Image source={require('../../assets/images/Divider.png')} style={styles.divider}/>
+        <View style={styles.rightCircle}></View>
+      </View>
+
+      <View style={styles.locationBox}>
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>Date</Text>
+            <Text style={styles.textLarge}>{moment(item.date).format('DD MMM')}</Text>
+          </View>
+        
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>Departure</Text>
+            <Text style={styles.textLarge}>{item.departureTime}</Text>
+          </View>
+
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>Price</Text>
+            <Text style={styles.textLarge}>${item.price}</Text>
+          </View>
+
+          <View style={styles.box}>
+            <Text style={styles.textSmall}>Number</Text>
+            <Text style={styles.textLarge}>{item.number}</Text>
+          </View>
+      </View>
+    
+    </View>
+  );
+
   const dates = generateDateRange(DepartureDate.value, ReturnDate.value);
+
+/// RETURN -------
   return (
     <FontLoader>
     <View style={styles.container}>
@@ -92,53 +159,20 @@ const splitCity = (str) => {
           style={{marginLeft:6.5}}
         />
 
-        {/* Item ticket box */}
-        <View style={styles.flightContainer}>
-
-          <View style={styles.locationBox}>
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>{departureData.inside}</Text>
-                <Text style={styles.textLarge}>{departureData.outside}</Text>
-              </View>
-        
-              <Image source={require('../../assets/images/FlightingIcon.png')} style={{width: 130, height: 24, marginTop: 14}}/>
-            
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>{arrivalData.inside}</Text>
-                <Text style={styles.textLarge}>{arrivalData.outside}</Text>
-              </View>
-          </View>
-          
-          <View style={styles.dividerContainer}>
-            <View style={styles.leftCircle}></View>
-            <Image source={require('../../assets/images/Divider.png')} style={styles.divider}/>
-            <View style={styles.rightCircle}></View>
-          </View>
-
-          <View style={styles.locationBox}>
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>Date</Text>
-                <Text style={styles.textLarge}>02 June</Text>
-              </View>
-            
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>Departure</Text>
-                <Text style={styles.textLarge}>9:00 AM</Text>
-              </View>
-
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>Price</Text>
-                <Text style={styles.textLarge}>$50</Text>
-              </View>
-
-              <View style={styles.box}>
-                <Text style={styles.textSmall}>Number</Text>
-                <Text style={styles.textLarge}>NL-41</Text>
-              </View>
-          </View>
-          
+        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-around', marginTop: 16}}>
+        <View style={{width: 274}}> 
+          <Text style={styles.availableFlightsText}>
+            {flightsArr.length} flights available from {departureData.outside} to {arrivalData.outside}
+          </Text>
+        </View>
+        <Image source={require('../../assets/images/FilterIcon.png')} style={{height: 40, width: 40, resizeMode: 'contain'}}/>
         </View>
 
+        <FlatList
+          data={flightsArr}
+          renderItem={renderFlightItem}
+          keyExtractor={(item) => item.number}
+        />
 
     </View>
     </FontLoader>
@@ -228,4 +262,10 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 22,
   },
+  availableFlightsText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
+  }
 });
