@@ -33,16 +33,11 @@ export default function FilterScreen() {
   };
   
   const handleReset = () => {
-    setFilterDepartureTime(null);
-    setFilterArrivalTime(null);
-    setFilterMinPrice(0);
-    setFilterMaxPrice(300);
+    setNewFilterDepartureTime(null);
+    setNewFilterArrivalTime(null);
+    setNewFilterMinPrice(0);
+    setNewFilterMaxPrice(1500);
     setNewFilterSortOption('Departure time');
-    setNewFilterDepartureTime(filterDepartureTime);
-    setNewFilterArrivalTime(filterArrivalTime);
-    setNewFilterMinPrice(filterMinPrice);
-    setNewFilterMaxPrice(filterMaxPrice);
-    setNewFilterSortOption(filterSortOption);
   };
 
   const timeRanges = [

@@ -18,6 +18,7 @@ const flightsData = require('../../assets/data/dataFlights.json');
 export default function TransportFlightScreen() {
   const [selectedDate, setSelectedDate] = useState(DepartureDate.value);
   const [filteredFlights, setFilteredFlights] = useState([]);
+  const { filterDepartureTime, filterArrivalTime, filterMinPrice, filterMaxPrice, filterSortOption } = useContext(FilterContext);
 
 
 // Ẩn Tab của bottomTabNavagitor
@@ -70,7 +71,9 @@ const splitCity = (str) => {
       flight.departure === Departure.value &&
       flight.destination === Arrival.value &&
       moment(flight.date).isSame(moment(selectedDate), 'day') &&
-      flight.class === SelectedClass.value
+      flight.class === SelectedClass.value &&
+      flight.price >= filterMinPrice &&
+      flight.price <= filterMaxPrice
     ).sort((a, b) => {
       const timeA = moment(a.departureTime, 'hh:mm A');
       const timeB = moment(b.departureTime, 'hh:mm A');
@@ -78,7 +81,7 @@ const splitCity = (str) => {
     });
 
     setFilteredFlights(flightsArr);
-  }, [selectedDate, Departure.value, Arrival.value, SelectedClass.value]);
+  }, [selectedDate, Departure.value, Arrival.value, SelectedClass.value, filterDepartureTime, filterArrivalTime, filterMinPrice, filterMaxPrice, filterSortOption]);
 
 // Render date item
   const DateItem = ({date, isSelected, onPress}) => {
@@ -151,7 +154,7 @@ const splitCity = (str) => {
     <View style={styles.container}>
 
         <Header title="Flights" />
-
+        <View>
         <FlatList
           data={dates}
           renderItem={ ({item})=> <DateItem
@@ -164,8 +167,9 @@ const splitCity = (str) => {
           showsHorizontalScrollIndicator={false}
           style={{marginLeft:6.5}}
         />
+        </View>
 
-        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-around', marginTop: 16}}>
+        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-around', marginTop: 16, marginBottom: 16}}>
           <View style={{width: 274}}>
             <Text style={styles.availableFlightsText}>
               {filteredFlights.length} flights available from {departureData.outside} to {arrivalData.outside}
@@ -180,6 +184,7 @@ const splitCity = (str) => {
           data={filteredFlights}
           renderItem={renderFlightItem}
           keyExtractor={(item) => item.number}
+          contentContainerStyle={{paddingBottom: 16}}
         />
 
     </View>
@@ -189,6 +194,7 @@ const splitCity = (str) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#F5F5F5',
   },
   itemContainer: {
@@ -215,7 +221,7 @@ const styles = StyleSheet.create({
   flightContainer: {
     marginHorizontal: 16,
     justifyContent: 'center',
-    marginTop: 16,
+    marginBottom: 16,
     height: 168,
     padding: 16,
     borderRadius: 20,
