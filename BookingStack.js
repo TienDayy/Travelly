@@ -6,10 +6,14 @@ import BookingScreen from './components/BookingScreen';
 import TransportBookingScreen from './components/TransportBookingScreen/TransportBookingScreen';
 import FeatureNotDeveloped from './components/FeatureNotDeveloped';
 import TransportFlightsScreen from './components/TransportFlightsScreen/TransportFlightsScreen';
+import FilterScreen from './components/TransportFlightsScreen/FilterScreen';
+import { FilterProvider } from './components/TransportFlightsScreen/FilterContext';
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+      <FilterProvider>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -22,6 +26,9 @@ export default function App() {
         <Stack.Screen name="Events" component={FeatureNotDeveloped}/>
         <Stack.Screen name="TransportFlightsScreen" component={TransportFlightsScreen}/>
         <Stack.Screen name="FeatureNotDeveloped" component={FeatureNotDeveloped}/>
+        <Stack.Screen name="FilterScreen" component={FilterScreen}/>
+        
       </Stack.Navigator>
+      </FilterProvider>
   );
 }

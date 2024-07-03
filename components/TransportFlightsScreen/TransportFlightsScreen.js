@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Image, TouchableOpacity, FlatList } from 'react-native';
 import Header from '../Header';
 import FontLoader from "../FontLoader";
@@ -11,21 +11,24 @@ import { SelectedClass } from '../TransportBookingScreen/Class';
 import { SelectedTransport } from '../TransportBookingScreen/ChooseTransport';
 import { Departure, Arrival } from '../TransportBookingScreen/ChooseDeparture&Arrival';
 
+import { FilterContext } from './FilterContext';
+
 const flightsData = require('../../assets/data/dataFlights.json');
 
 export default function TransportFlightScreen() {
-
   const [selectedDate, setSelectedDate] = useState(DepartureDate.value);
+  const [filteredFlights, setFilteredFlights] = useState([]);
+
 
 // Ẩn Tab của bottomTabNavagitor
     const navigation = useNavigation();
     useLayoutEffect(() => {
         const parent = navigation.getParent();
-    
+
         parent?.setOptions({
           tabBarStyle: { display: 'none' },
         });
-    
+
         return () =>
           parent?.setOptions({
             tabBarStyle: undefined,
@@ -61,18 +64,21 @@ const splitCity = (str) => {
   const departureData = splitCity(Departure.value);
   const arrivalData = splitCity(Arrival.value);
 
-// Tìm các chuyến bay phù hợp
+// Tìm các chuyến bay phù hợp và set lại mảng nếu thay đổi
+  useEffect(() => {
+    const flightsArr = flightsData.flights.filter(flight =>
+      flight.departure === Departure.value &&
+      flight.destination === Arrival.value &&
+      moment(flight.date).isSame(moment(selectedDate), 'day') &&
+      flight.class === SelectedClass.value
+    ).sort((a, b) => {
+      const timeA = moment(a.departureTime, 'hh:mm A');
+      const timeB = moment(b.departureTime, 'hh:mm A');
+      return timeA - timeB;
+    });
 
-  const flightsArr = flightsData.flights.filter(flight =>
-    flight.departure === Departure.value &&
-    flight.destination === Arrival.value &&
-    moment(flight.date).isSame(moment(selectedDate), 'day') &&
-    flight.class === SelectedClass.value
-  ).sort((a, b) => {
-    const timeA = moment(a.departureTime, 'hh:mm A');
-    const timeB = moment(b.departureTime, 'hh:mm A');
-    return timeA - timeB;
-  });
+    setFilteredFlights(flightsArr);
+  }, [selectedDate, Departure.value, Arrival.value, SelectedClass.value]);
 
 // Render date item
   const DateItem = ({date, isSelected, onPress}) => {
@@ -97,15 +103,15 @@ const splitCity = (str) => {
             <Text style={styles.textSmall}>{departureData.inside}</Text>
             <Text style={styles.textLarge}>{departureData.outside}</Text>
           </View>
-    
+
           <Image source={require('../../assets/images/FlightingIcon.png')} style={{width: 130, height: 24, marginTop: 14}}/>
-        
+
           <View style={styles.box}>
             <Text style={styles.textSmall}>{arrivalData.inside}</Text>
             <Text style={styles.textLarge}>{arrivalData.outside}</Text>
           </View>
       </View>
-    
+
       <View style={styles.dividerContainer}>
         <View style={styles.leftCircle}></View>
         <Image source={require('../../assets/images/Divider.png')} style={styles.divider}/>
@@ -117,7 +123,7 @@ const splitCity = (str) => {
             <Text style={styles.textSmall}>Date</Text>
             <Text style={styles.textLarge}>{moment(item.date).format('DD MMM')}</Text>
           </View>
-        
+
           <View style={styles.box}>
             <Text style={styles.textSmall}>Departure</Text>
             <Text style={styles.textLarge}>{item.departureTime}</Text>
@@ -133,7 +139,7 @@ const splitCity = (str) => {
             <Text style={styles.textLarge}>{item.number}</Text>
           </View>
       </View>
-    
+
     </View>
   );
 
@@ -160,16 +166,18 @@ const splitCity = (str) => {
         />
 
         <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-around', marginTop: 16}}>
-        <View style={{width: 274}}> 
-          <Text style={styles.availableFlightsText}>
-            {flightsArr.length} flights available from {departureData.outside} to {arrivalData.outside}
-          </Text>
-        </View>
-        <Image source={require('../../assets/images/FilterIcon.png')} style={{height: 40, width: 40, resizeMode: 'contain'}}/>
+          <View style={{width: 274}}>
+            <Text style={styles.availableFlightsText}>
+              {filteredFlights.length} flights available from {departureData.outside} to {arrivalData.outside}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}>
+            <Image source={require('../../assets/images/FilterIcon.png')} style={{height: 40, width: 40, resizeMode: 'contain'}}/>
+          </TouchableOpacity>
         </View>
 
         <FlatList
-          data={flightsArr}
+          data={filteredFlights}
           renderItem={renderFlightItem}
           keyExtractor={(item) => item.number}
         />
@@ -225,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#F5F5F5',
     position: 'absolute',
-    left: -20,
+    left: -28,
     top: 4
   },
   rightCircle: {
@@ -234,7 +242,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#F5F5F5',
     position: 'absolute',
-    right: -20,
+    right: -28,
     top: 4,
   },
   divider: {
@@ -247,7 +255,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   box: {
-    
+
   },
   textSmall: {
     fontFamily: 'Poppins-Medium',
