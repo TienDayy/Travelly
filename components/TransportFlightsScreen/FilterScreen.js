@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, TextInput } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../Header';
 import { FilterContext } from './FilterContext';
@@ -98,6 +98,7 @@ export default function FilterScreen() {
 
   return (
     <FontLoader>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Header title="Filter" />
 
@@ -186,6 +187,7 @@ export default function FilterScreen() {
           </TouchableOpacity>
         </View>
       </View>
+      </TouchableWithoutFeedback>
     </FontLoader>
   );
 }

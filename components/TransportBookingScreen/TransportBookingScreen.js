@@ -32,7 +32,7 @@ export default function TransportBookingScreen() {
       setFilterArrivalTime(null);
       setFilterMinPrice(0);
       setFilterMaxPrice(1500);
-      setFilterSortOption('DepartureTime');
+      setFilterSortOption('Departure time');
     }, [])
   );
 

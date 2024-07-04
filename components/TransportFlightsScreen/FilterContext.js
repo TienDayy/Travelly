@@ -7,7 +7,7 @@ export const FilterProvider = ({ children }) => {
   const [filterArrivalTime, setFilterArrivalTime] = useState(null);
   const [filterMinPrice, setFilterMinPrice] = useState(0);
   const [filterMaxPrice, setFilterMaxPrice] = useState(1500);
-  const [filterSortOption, setFilterSortOption] = useState('DepartureTime');
+  const [filterSortOption, setFilterSortOption] = useState('Departure time');
 
   return (
     <FilterContext.Provider value={{ filterDepartureTime, setFilterDepartureTime,
