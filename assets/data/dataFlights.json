@@ -92,9 +92,26 @@
         "destination": "Ha Noi (HN)",
         "date": "2024-07-02",
         "departureTime": "5:00 AM",
-        "arrivalTime": "7:00 AM",
+        "arrivalTime": "6:45 AM",
         "class": "Economy",
         "price": 30,
+        "seats": [
+          {"row": 1, "column": "A", "status": "Available"},
+          {"row": 1, "column": "B", "status": "Available"},
+          // Add 18 more Business class seats
+          {"row": 20, "column": "D", "status": "Available"}
+          // Add 19 more Economy class seats
+        ]
+      },
+      {
+        "number": "HH-14",
+        "departure": "Ho Chi Minh (HCM)",
+        "destination": "Ha Noi (HN)",
+        "date": "2024-07-02",
+        "departureTime": "3:00 AM",
+        "arrivalTime": "4:30 AM",
+        "class": "Economy",
+        "price": 28,
         "seats": [
           {"row": 1, "column": "A", "status": "Available"},
           {"row": 1, "column": "B", "status": "Available"},

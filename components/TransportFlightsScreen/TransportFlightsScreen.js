@@ -17,6 +17,7 @@ const flightsData = require('../../assets/data/dataFlights.json');
 
 export default function TransportFlightScreen() {
   const [selectedDate, setSelectedDate] = useState(DepartureDate.value);
+  const [initialFlightsArr, setInitialFlightsArr] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
   const { filterDepartureTime, filterArrivalTime, filterMinPrice, filterMaxPrice, filterSortOption } = useContext(FilterContext);
 
@@ -65,23 +66,83 @@ const splitCity = (str) => {
   const departureData = splitCity(Departure.value);
   const arrivalData = splitCity(Arrival.value);
 
-// Tìm các chuyến bay phù hợp và set lại mảng nếu thay đổi
+// Tìm các chuyến bay phù hợp -> initialFlightsArr
   useEffect(() => {
     const flightsArr = flightsData.flights.filter(flight =>
       flight.departure === Departure.value &&
       flight.destination === Arrival.value &&
       moment(flight.date).isSame(moment(selectedDate), 'day') &&
-      flight.class === SelectedClass.value &&
-      flight.price >= filterMinPrice &&
-      flight.price <= filterMaxPrice
-    ).sort((a, b) => {
-      const timeA = moment(a.departureTime, 'hh:mm A');
-      const timeB = moment(b.departureTime, 'hh:mm A');
-      return timeA - timeB;
-    });
+      flight.class === SelectedClass.value
+    );
+    setInitialFlightsArr(flightsArr);
+  }, [selectedDate, Departure.value, Arrival.value, SelectedClass.value]);
 
+
+  const isTimeInRange = (time, range) => {
+    const parsedTime = moment(time, 'hh:mm A');
+    let start, end;
+    switch (range) {
+      case '12AM - 06AM':
+        start = moment('12:00 AM', 'hh:mm A');
+        end = moment('06:00 AM', 'hh:mm A');
+        break;
+      case '06AM - 12PM':
+        start = moment('06:00 AM', 'hh:mm A');
+        end = moment('12:00 PM', 'hh:mm A');
+        break;
+      case '12PM - 06PM':
+        start = moment('12:00 PM', 'hh:mm A');
+        end = moment('06:00 PM', 'hh:mm A');
+        break;
+      case '06PM - 12AM':
+        start = moment('06:00 PM', 'hh:mm A');
+        end = moment('12:00 AM', 'hh:mm A').add(1, 'day');
+      break;  
+      default:
+        return true;
+    }
+    return parsedTime.isBetween(start, end, null, '[]');
+  };
+
+  const calculateDuration = (departureTime, arrivalTime) => {
+    const depTime = moment(departureTime, 'hh:mm A');
+    const arrTime = moment(arrivalTime, 'hh:mm A');
+    return arrTime.diff(depTime);
+  }
+
+// Lọc lại mảng initialFlightsArr theo giá và set lại mảng filteredFlights nếu thay đổi
+  useEffect(() => {
+    const flightsArr = initialFlightsArr.filter(flight =>
+      flight.price >= filterMinPrice &&
+      flight.price <= filterMaxPrice &&
+      (!filterDepartureTime || isTimeInRange(flight.departureTime, filterDepartureTime)) &&
+      (!filterArrivalTime || isTimeInRange(flight.arrivalTime, filterArrivalTime))
+    )
+    if (filterSortOption) {
+      flightsArr.sort((a, b) => {
+        const timeA = moment(a.departureTime, 'hh:mm A');
+        const timeB = moment(b.departureTime, 'hh:mm A');
+        const arrTimeA = moment(a.arrivalTime, 'hh:mm A');
+        const arrTimeB = moment(b.arrivalTime, 'hh:mm A');
+
+        switch (filterSortOption) {
+          case 'Arrival time':
+            return arrTimeA - arrTimeB;
+          case 'Departure time':
+            return timeA - timeB;
+          case 'Price':
+            return b.price - a.price;
+          case 'Lowest fare':
+            return a.price - b.price;
+          case 'Duration':
+            return calculateDuration(a.departureTime, a.arrivalTime) - calculateDuration(b.departureTime, b.arrivalTime);
+          default:
+            return 0;
+        }
+      });
+    }
     setFilteredFlights(flightsArr);
-  }, [selectedDate, Departure.value, Arrival.value, SelectedClass.value, filterDepartureTime, filterArrivalTime, filterMinPrice, filterMaxPrice, filterSortOption]);
+  }, [filterMinPrice, filterMaxPrice, filterSortOption, filterDepartureTime, filterArrivalTime, initialFlightsArr]);
 
 // Render date item
   const DateItem = ({date, isSelected, onPress}) => {

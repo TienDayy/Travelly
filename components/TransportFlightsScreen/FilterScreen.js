@@ -6,6 +6,7 @@ import { FilterContext } from './FilterContext';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import FontLoader from '../FontLoader';
 
+
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function FilterScreen() {
@@ -41,12 +42,14 @@ export default function FilterScreen() {
   };
 
   const timeRanges = [
-    { id: '1', range: '12AM-6AM', label: 'departure' },
-    { id: '2', range: '6AM-12PM', label: 'departure' },
-    { id: '3', range: '12PM-6PM', label: 'departure' },
-    { id: '4', range: '12AM-6AM', label: 'arrival' },
-    { id: '5', range: '6AM-12PM', label: 'arrival' },
-    { id: '6', range: '12PM-6PM', label: 'arrival' },
+    { id: '1', range: '12AM - 06AM', label: 'departure' },
+    { id: '2', range: '06AM - 12PM', label: 'departure' },
+    { id: '3', range: '12PM - 06PM', label: 'departure' },
+    { id: '4', range: '06PM - 12AM', label: 'departure' },
+    { id: '5', range: '12AM - 06AM', label: 'arrival' },
+    { id: '6', range: '06AM - 12PM', label: 'arrival' },
+    { id: '7', range: '12PM - 06PM', label: 'arrival' },
+    { id: '8', range: '06PM - 12AM', label: 'arrival' },
   ];
 
   const renderTimeRangeButton = ({ item }) => {
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
   },
   timeRangeButton: {
     height: 36,
-    width: 128,
+    width: 124,
     marginRight: 8,
     borderRadius: 12,
     justifyContent: 'center',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert, TouchableOpacity } from 'react-native';
 import Header from '../Header';
 import SearchDepartureBar from './SearchDepartureBar';
@@ -8,14 +8,16 @@ import ChooseDate from './ChooseDate';
 import PassengerAndLuggage from './Passenger&Luggage';
 import Class from './Class';
 import ChooseTransport from './ChooseTransport';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useFocusEffect } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
 import { SelectedTransport } from './ChooseTransport';
 import { Departure, Arrival } from './ChooseDeparture&Arrival';
+import { FilterContext } from '../TransportFlightsScreen/FilterContext';
 
 export default function TransportBookingScreen() {
 
   const navigation = useNavigation();
+  const { setFilterDepartureTime, setFilterArrivalTime, setFilterMinPrice, setFilterMaxPrice, setFilterSortOption } = useContext(FilterContext);
 
 
   const handleTouchablePress = () => {
@@ -23,6 +25,16 @@ export default function TransportBookingScreen() {
       searchBarRef.current.hideFlatLists();
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setFilterDepartureTime(null);
+      setFilterArrivalTime(null);
+      setFilterMinPrice(0);
+      setFilterMaxPrice(1500);
+      setFilterSortOption('DepartureTime');
+    }, [])
+  );
 
   const searchBarRef = React.useRef(null);
 
@@ -33,13 +45,7 @@ export default function TransportBookingScreen() {
         
         <Header title="Transport Booking" />
         
-          {/* <SearchDepartureBar ref={searchBarRef}/>
-          <SearchArrivalBar ref={searchBarRef}/> */}
           <ChooseDepartureAndArrival ref={searchBarRef}/>
-
-          {/* <TouchableOpacity style={styles.swapIcon}>
-            <Image source={require('../../assets/images/SwapIcon.png')} style={{width: 40, height: 40, resizeMode: 'contain'}}/>
-          </TouchableOpacity> */}
 
           <ChooseDate/>
 
