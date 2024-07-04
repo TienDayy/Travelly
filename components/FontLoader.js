@@ -30,7 +30,7 @@ const FontLoader = ({ children }) => {
     }, []);
 
     if (!fontsLoaded) {
-        return null; // or any loading indicator you prefer
+        return null;
     }
 
     return children;

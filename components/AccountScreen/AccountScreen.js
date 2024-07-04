@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24,
     resizeMode: 'contain',
-    marginRight: 8, // Add some spacing between the icon and text
+    marginRight: 8,
   },
   endSessionText: {
     fontFamily: 'Poppins-Bold',

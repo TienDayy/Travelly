@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FontLoader from '../FontLoader';
 
-// Tạo một đối tượng để lưu trữ giá trị của selectedButton
 export const SelectedClass = {
   value: 'Economy',
 };

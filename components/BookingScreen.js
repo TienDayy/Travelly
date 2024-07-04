@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, FlatList, Text } from 'react-native';
-import BookingItem from './BookingItem'; // Import BookingItem component
+import BookingItem from './BookingItem';
 import { useNavigation } from '@react-navigation/native';
 import {StatusBar} from 'react-native'
 import FontLoader from "./FontLoader";

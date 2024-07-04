@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   scrollViewContent: {
-    paddingBottom: 20,  // Đảm bảo rằng nội dung có đủ khoảng trống để cuộn
+    paddingBottom: 20,
   },
   imageStyle: {
     marginTop: 24,

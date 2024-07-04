@@ -1,6 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BookingScreen from './components/BookingScreen';
 import TransportBookingScreen from './components/TransportBookingScreen/TransportBookingScreen';

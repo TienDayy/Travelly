@@ -1,8 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert, TouchableOpacity } from 'react-native';
 import Header from '../Header';
-import SearchDepartureBar from './SearchDepartureBar';
-import SearchArrivalBar from './SearchArrivalBar';
 import ChooseDepartureAndArrival from './ChooseDeparture&Arrival';
 import ChooseDate from './ChooseDate';
 import PassengerAndLuggage from './Passenger&Luggage';

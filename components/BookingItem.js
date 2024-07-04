@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         marginVertical: 8,
         padding: 8,
-        width: width - 32, // Đặt chiều rộng khung chứa để cách đều hai bên màn hình 16
-        alignItems: 'center', // Canh giữa nội dung theo chiều ngang
+        width: width - 32,
+        alignItems: 'center',
     },
   image: {
     width: '100%',
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    //marginVertical: 8,
   },
   leftCircle: {
     width: 24,

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import FontLoader from "../FontLoader";
 
-// Tạo một đối tượng để lưu trữ giá trị của inputValues
 export const InputInformation = {
   '1': '',
   '2': '',
@@ -19,7 +18,6 @@ const PassengerAndLuggage = () => {
     '4': '',
   });
 
-  // Sử dụng useEffect để cập nhật giá trị của InputInformation khi inputValues thay đổi
   useEffect(() => {
     InputInformation['1'] = inputValues['1'];
     InputInformation['2'] = inputValues['2'];

@@ -38,6 +38,13 @@ export default function HomeScreen() {
     <FontLoader>
     <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
       <View style={styles.container}>
+
+        {/* Reload Onboarding Button */}
+        {/* <TouchableOpacity style={{marginTop: 32}} onPress={clearOnboarding}>
+          <Text>Reload Onboarding</Text>
+        </TouchableOpacity> */}
+            {/* ------ */}
+            
         <StatusBar backgroundColor="#F5F5F5" barStyle="dark-content" />
         <Text style={styles.headerStyle}>Explore the beautiful world!</Text>
         
@@ -80,7 +87,10 @@ export default function HomeScreen() {
                 </Pressable>
               </View>
             </View>
+
         </Modal>
+        
+
         
       </View>
     </TouchableWithoutFeedback>
@@ -93,7 +103,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-    //marginTop: StatusBar.currentHeight,
   },
   headerStyle: {
     marginTop: StatusBar.currentHeight + 24,
