@@ -160,7 +160,7 @@ const splitCity = (str) => {
 
 // Render ticket box item
   const renderFlightItem = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('SelectSeats')} activeOpacity={0.5}>
+    <TouchableOpacity onPress={() => navigation.navigate('SelectSeats', { flight: item })} activeOpacity={0.5}>
     <View style={styles.flightContainer}>
 
       <View style={styles.locationBox}>

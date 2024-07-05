@@ -3,13 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from '
 import Header from '../Header';
 import FontLoader from "../FontLoader";
 import { InputInformation } from '../TransportBookingScreen/Passenger&Luggage';
-
-const flightsData = require('../../assets/data/dataFlights.json');
+import { useNavigation, useRoute } from '@react-navigation/native';
+// const flightsData = require('../../assets/data/dataFlights.json');
 
 export default function SelectSeatsScreen() {
+  const route = useRoute();
+  const { flight } = route.params;
   const travelerCount = InputInformation['1'];
   const [selectedTraveller, setSelectedTraveller] = useState(1);
-  const [selectedSeat, setSelectedSeat] = useState({ row: null, column: null });
+  const [selectedSeats, setSelectedSeats] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
   
   const travellerArr = Array.from({ length: travelerCount || 1}, (_, index) => index + 1);
@@ -26,17 +28,28 @@ export default function SelectSeatsScreen() {
     );
   };
   const SeatItem = ({ seat, onPress, isSelected }) => {
-    const seatColor = isSelected ? '#FEA36B' : (seat.status === 'Available' ? '#B7DFDB' : '#089083');
+    const isSelectedBefore =  Object.values(selectedSeats).some(selectedSeat => selectedSeat.row === seat.row && selectedSeat.column === seat.column);
+    const seatColor = (isSelected || isSelectedBefore)? '#FEA36B' : (seat.status === 'Available' ? '#B7DFDB' : '#089083');
+    const isBookedOrSelected = seat.status === 'Booked' || isSelectedBefore;
     return (
       <TouchableOpacity
-      onPress={() => seat.status === 'Available' && onPress()}
+      onPress={() => seat.status === 'Available' && !isBookedOrSelected && onPress()}
         style={[styles.seat, { backgroundColor: seatColor }]}>
       </TouchableOpacity>
     );
   };
 
+  const handleSeatSelection = (row, column) => {
+     const seatPrice = flight.price;
+    setSelectedSeats(prevSelectedSeats => ({
+      ...prevSelectedSeats,
+      [selectedTraveller]: { row, column }
+    }));
+    setTotalPrice(prevTotalPrice => prevTotalPrice + seatPrice);
+  };
+
   const renderSeats = () => {
-    const seats = flightsData.flights[0].seats;
+    const seats = flight.seats;
     
     // Tạo mảng chứa các hàng và các ghế theo từng cột
     let rows = [];
@@ -48,13 +61,13 @@ export default function SelectSeatsScreen() {
       // Đẩy cột A và B vào trước hàng
       for (let column of ['A', 'B']) {
         let seat = seats.find(s => s.row === row && s.column === column);
-        let isSelected = selectedSeat.row === row && selectedSeat.column === column;
+        let isSelected = selectedSeats[selectedTraveller] && selectedSeats[selectedTraveller].row === row && selectedSeats[selectedTraveller].column === column;
         if (seat) {
           rowSeats.push(
             <SeatItem
               key={`${row}${column}`}
               seat={seat}
-              onPress={() => setSelectedSeat({ row, column })}
+              onPress={() => handleSeatSelection(row, column)}
               isSelected={isSelected}
             />
           );
@@ -71,13 +84,13 @@ export default function SelectSeatsScreen() {
       // Đẩy cột C và D vào sau hàng
       for (let column of ['C', 'D']) {
         let seat = seats.find(s => s.row === row && s.column === column);
-        let isSelected = selectedSeat.row === row && selectedSeat.column === column;
+        let isSelected = selectedSeats[selectedTraveller] && selectedSeats[selectedTraveller].row === row && selectedSeats[selectedTraveller].column === column;
         if (seat) {
           rowSeats.push(
             <SeatItem
               key={`${row}${column}`}
               seat={seat}
-              onPress={() => setSelectedSeat({ row, column })}
+              onPress={() => handleSeatSelection(row, column)}
               isSelected={isSelected}
             />
           );
@@ -145,11 +158,11 @@ export default function SelectSeatsScreen() {
         <View style={styles.continueBox}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 24}}>
             <Text style={styles.textContinueBox1}>Your seats</Text>
-            <Text style={styles.textContinueBox2}>Traveller {selectedTraveller} / Seat {selectedSeat.row}{selectedSeat.column}</Text>
+            <Text style={styles.textContinueBox2}>Traveller {selectedTraveller} / Seat {selectedSeats[selectedTraveller]?.row}{selectedSeats[selectedTraveller]?.column}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 16}}>
             <Text style={styles.textContinueBox1}>Total price</Text>
-            <Text style={styles.textContinueBox2}>$ 50.00</Text>
+            <Text style={styles.textContinueBox2}>${totalPrice}</Text>
           </View>
           
           <TouchableOpacity
