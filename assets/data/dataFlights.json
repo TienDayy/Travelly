@@ -30,9 +30,26 @@
           {"row": 5, "column": "B", "status": "Available"},
           {"row": 5, "column": "C", "status": "Available"},
           {"row": 5, "column": "D", "status": "Available"},
-
-          //{"row": 20, "column": "D", "status": "Available"}
-          // Add 19 more Economy class seats
+          {"row": 6, "column": "A", "status": "Booked"},
+          {"row": 6, "column": "B", "status": "Available"},
+          {"row": 6, "column": "C", "status": "Available"},
+          {"row": 6, "column": "D", "status": "Available"},
+          {"row": 7, "column": "A", "status": "Available"},
+          {"row": 7, "column": "B", "status": "Booked"},
+          {"row": 7, "column": "C", "status": "Available"},
+          {"row": 7, "column": "D", "status": "Booked"},
+          {"row": 8, "column": "A", "status": "Available"},
+          {"row": 8, "column": "B", "status": "Available"},
+          {"row": 8, "column": "C", "status": "Booked"},
+          {"row": 8, "column": "D", "status": "Available"},
+          {"row": 9, "column": "A", "status": "Booked"},
+          {"row": 9, "column": "B", "status": "Available"},
+          {"row": 9, "column": "C", "status": "Available"},
+          {"row": 9, "column": "D", "status": "Booked"},
+          {"row": 10, "column": "A", "status": "Available"},
+          {"row": 10, "column": "B", "status": "Available"},
+          {"row": 10, "column": "C", "status": "Available"},
+          {"row": 10, "column": "D", "status": "Available"}
         ]
       },
       {
@@ -47,9 +64,44 @@
         "seats": [
           {"row": 1, "column": "A", "status": "Available"},
           {"row": 1, "column": "B", "status": "Available"},
-          // Add 18 more Business class seats
-          {"row": 20, "column": "D", "status": "Available"}
-          // Add 19 more Economy class seats
+          {"row": 1, "column": "C", "status": "Booked"},
+          {"row": 1, "column": "D", "status": "Available"},
+          {"row": 2, "column": "A", "status": "Booked"},
+          {"row": 2, "column": "B", "status": "Available"},
+          {"row": 2, "column": "C", "status": "Booked"},
+          {"row": 2, "column": "D", "status": "Available"},
+          {"row": 3, "column": "A", "status": "Available"},
+          {"row": 3, "column": "B", "status": "Booked"},
+          {"row": 3, "column": "C", "status": "Available"},
+          {"row": 3, "column": "D", "status": "Booked"},
+          {"row": 4, "column": "A", "status": "Available"},
+          {"row": 4, "column": "B", "status": "Available"},
+          {"row": 4, "column": "C", "status": "Available"},
+          {"row": 4, "column": "D", "status": "Booked"},
+          {"row": 5, "column": "A", "status": "Booked"},
+          {"row": 5, "column": "B", "status": "Available"},
+          {"row": 5, "column": "C", "status": "Booked"},
+          {"row": 5, "column": "D", "status": "Available"},
+          {"row": 6, "column": "A", "status": "Available"},
+          {"row": 6, "column": "B", "status": "Available"},
+          {"row": 6, "column": "C", "status": "Booked"},
+          {"row": 6, "column": "D", "status": "Available"},
+          {"row": 7, "column": "A", "status": "Available"},
+          {"row": 7, "column": "B", "status": "Booked"},
+          {"row": 7, "column": "C", "status": "Available"},
+          {"row": 7, "column": "D", "status": "Booked"},
+          {"row": 8, "column": "A", "status": "Available"},
+          {"row": 8, "column": "B", "status": "Booked"},
+          {"row": 8, "column": "C", "status": "Available"},
+          {"row": 8, "column": "D", "status": "Available"},
+          {"row": 9, "column": "A", "status": "Booked"},
+          {"row": 9, "column": "B", "status": "Available"},
+          {"row": 9, "column": "C", "status": "Booked"},
+          {"row": 9, "column": "D", "status": "Available"},
+          {"row": 10, "column": "A", "status": "Available"},
+          {"row": 10, "column": "B", "status": "Available"},
+          {"row": 10, "column": "C", "status": "Booked"},
+          {"row": 10, "column": "D", "status": "Available"}
         ]
       },
       {
