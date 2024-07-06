@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import Header from './Header'
 
 const FeatureNotDeveloped = () => {
   return (
     <View style={styles.container}>
       <Header title="" />
-      <Text style={styles.text}>This feature is not yet developed.</Text>
+      <Image source={require('../assets/images/NotDeveloped.png')} style={{height: 300, resizeMode: 'contain', marginTop: 48}}/>
+      <Text style={styles.text}>This feature is coming soon. Stay tuned for updates !</Text>
     </View>
   );
 };
@@ -14,6 +15,7 @@ const FeatureNotDeveloped = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#F5F5F5',
     padding: 20,
   },
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#01635D',
     textAlign: 'center',
-    marginTop: 200,
+    marginTop: 28,
     borderWidth: 2,
     borderColor: '#01635D',
     padding: 20,

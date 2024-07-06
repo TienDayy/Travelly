@@ -26,24 +26,14 @@ const ChooseDate = () => {
 
   const onChangeDeparture = (event, selectedDate) => {
     const currentDate = selectedDate || departureDate;
-    if (currentDate <= returnDate) {
-      setShowDeparturePicker(false);
-      setDepartureDate(currentDate);
-    } else {
-      setShowDeparturePicker(false);
-      setDepartureDate(departureDate);
-    }
+    setShowDeparturePicker(false);
+    setDepartureDate(currentDate);
   }
 
   const onChangeReturn = (event, selectedDate) => {
     const currentDate = selectedDate || returnDate;
-    if (currentDate >= departureDate) {
-      setShowReturnPicker(false);
-      setReturnDate(currentDate);
-    } else {
-     setShowReturnPicker(false);
-      setReturnDate(returnDate); 
-    }
+    setShowReturnPicker(false);
+    setReturnDate(currentDate);
   };
 
   const formatDate = (date) => {

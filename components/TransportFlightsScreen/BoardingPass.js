@@ -142,6 +142,12 @@ export default function BoardingPassScreen() {
           keyExtractor={(item, index) => index.toString()}
           style={{ marginTop: 24 }}
         />
+        
+        <TouchableOpacity
+            style={styles.continueButton}
+            onPress={() => {}}>
+            <Text style={styles.continueTextStyle}>Download ticket</Text>
+        </TouchableOpacity>   
 
       </View>
     </FontLoader>
@@ -215,5 +221,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     lineHeight: 18,
-  }
+  },
+  continueButton: {
+    marginHorizontal: 16,
+    marginTop: 24,
+    height: 60,
+    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: '#FEA36B',
+  },
+  continueTextStyle: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold',
+    fontSize: 18,
+    fontWeight: '500',
+    lineHeight: 24,
+  },
 });

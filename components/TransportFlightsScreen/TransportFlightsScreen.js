@@ -25,17 +25,22 @@ export default function TransportFlightScreen() {
 // Ẩn Tab của bottomTabNavagitor
     const navigation = useNavigation();
     useLayoutEffect(() => {
-        const parent = navigation.getParent();
-
-        parent?.setOptions({
+      const parent = navigation.getParent();
+      parent?.setOptions({
           tabBarStyle: { display: 'none' },
-        });
+      });
 
-        return () =>
+      return () =>
           parent?.setOptions({
-            tabBarStyle: undefined,
+              tabBarStyle: {
+                  height: 56,
+                  position: 'absolute',
+                  borderTopRightRadius: 20,
+                  borderTopLeftRadius: 20,
+                  display: 'flex',
+              },
           });
-    }, [navigation]);
+  }, [navigation]);
 //      ----
 
 // Hàm để tách phần trong và ngoài ngoặc
@@ -50,17 +55,16 @@ const splitCity = (str) => {
 };
 
 
-// Hàm tạo mảng các ngày từ DepartureDate đến ReturnDate
-  const generateDateRange = (startDate, endDate) => {
-    const dates = [];
-    let currentDate = moment(startDate);
-    const lastDate = moment(endDate);
-    while(currentDate <= lastDate){
-      dates.push(currentDate.clone());
-      currentDate.add(1, 'days');
-    }
-    return dates;
+// Hàm tạo mảng các ngày từ DepartureDate -> DepartureDate + 10
+const generateDateRange = (startDate) => {
+  const dates = [];
+  let currentDate = moment(startDate);
+  for (let i = 0; i <= 10; i++) {
+    dates.push(currentDate.clone());
+    currentDate.add(1, 'days');
   }
+  return dates;
+}
 
 // Sử dụng hàm splitCity để tách các phần cần thiết
   const departureData = splitCity(Departure.value);
@@ -209,7 +213,7 @@ const splitCity = (str) => {
     </TouchableOpacity>
   );
 
-  const dates = generateDateRange(DepartureDate.value, ReturnDate.value);
+  const dates = generateDateRange(DepartureDate.value);
 
 /// RETURN -------
   return (

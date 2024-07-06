@@ -10,13 +10,14 @@ import { useNavigation,useFocusEffect } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
 import { SelectedTransport } from './ChooseTransport';
 import { Departure, Arrival } from './ChooseDeparture&Arrival';
+import { InputInformation } from './Passenger&Luggage';
+import { DepartureDate, ReturnDate } from './ChooseDate';
 import { FilterContext } from '../TransportFlightsScreen/FilterContext';
 
 export default function TransportBookingScreen() {
 
   const navigation = useNavigation();
   const { setFilterDepartureTime, setFilterArrivalTime, setFilterMinPrice, setFilterMaxPrice, setFilterSortOption } = useContext(FilterContext);
-
 
   const handleTouchablePress = () => {
     if (searchBarRef.current) {
@@ -35,7 +36,6 @@ export default function TransportBookingScreen() {
   );
 
   const searchBarRef = React.useRef(null);
-
   return (
    
     <TouchableWithoutFeedback onPress={handleTouchablePress}>
@@ -59,9 +59,16 @@ export default function TransportBookingScreen() {
             onPress={() => {
               if (SelectedTransport.value === '1') {
                 if(Departure.value && Arrival.value){
-                  navigation.navigate("TransportFlightsScreen");
-                } else {
-                  Alert.alert("Sorry !","Please select your Departure and Arrival");}
+                  if (InputInformation['1']){
+                    if (DepartureDate.value < ReturnDate.value){
+                      navigation.navigate("TransportFlightsScreen");
+                    } else {
+                      Alert.alert("Sorry !","The return flight date must be after the departure date.");}
+                  } else {
+                    Alert.alert("Sorry !","Please enter the number of passengers.");}
+                }
+                else {
+                  Alert.alert("Sorry !","Please select your Departure and Arrival.");}
               } else {
                 navigation.navigate("FeatureNotDeveloped");
               }
