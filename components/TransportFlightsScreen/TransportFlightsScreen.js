@@ -13,7 +13,7 @@ import { Departure, Arrival } from '../TransportBookingScreen/ChooseDeparture&Ar
 
 import { FilterContext } from './FilterContext';
 
-const flightsData = require('../../assets/data/dataFlights.json');
+const flightsData = require('../../dataFlights.json');
 
 export default function TransportFlightScreen() {
   const [selectedDate, setSelectedDate] = useState(DepartureDate.value);

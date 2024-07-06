@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Keyboard, Image } from 'react-native';
-import data from '../../assets/data/dataFlights.json';
+import data from '../../dataFlights.json';
 import FontLoader from '../FontLoader';
 
 export const Departure = {

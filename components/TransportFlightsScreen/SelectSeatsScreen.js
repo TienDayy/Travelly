@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Alert, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Header from '../Header';
 import FontLoader from "../FontLoader";
 import { InputInformation } from '../TransportBookingScreen/Passenger&Luggage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-// const flightsData = require('../../assets/data/dataFlights.json');
+import * as FileSystem from 'expo-file-system';
 
 export default function SelectSeatsScreen() {
   const route = useRoute();
@@ -13,6 +13,7 @@ export default function SelectSeatsScreen() {
   const [selectedTraveller, setSelectedTraveller] = useState(1);
   const [selectedSeats, setSelectedSeats] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigation = useNavigation();
   
   const travellerArr = Array.from({ length: travelerCount || 1}, (_, index) => index + 1);
 
@@ -110,6 +111,7 @@ export default function SelectSeatsScreen() {
   
     return rows;
   }
+
   return (
     <FontLoader>
       <View style={styles.container}>
@@ -167,10 +169,19 @@ export default function SelectSeatsScreen() {
           
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={() => {}}>
+            onPress={() => {
+              const allSeatsSelected = travellerArr.every(traveller => selectedSeats[traveller]);
+              if (allSeatsSelected) {
+                navigation.navigate('BoardingPass',{
+                  flight: flight,
+                  selectedSeats: selectedSeats,
+                })
+              } else {
+                Alert.alert('Seat Selection', 'Please select seats for all travellers.');
+              }
+            }}>
             <Text style={styles.continueTextStyle}>Continue</Text>
-          </TouchableOpacity>
-            
+          </TouchableOpacity>    
         </View>
 
 

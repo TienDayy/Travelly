@@ -6,6 +6,8 @@ import FeatureNotDeveloped from './components/FeatureNotDeveloped';
 import TransportFlightsScreen from './components/TransportFlightsScreen/TransportFlightsScreen';
 import FilterScreen from './components/TransportFlightsScreen/FilterScreen';
 import SelectSeatsScreen from './components/TransportFlightsScreen/SelectSeatsScreen'
+import BoardingPassScreen from './components/TransportFlightsScreen/BoardingPass'
+
 import { FilterProvider } from './components/TransportFlightsScreen/FilterContext';
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +29,7 @@ export default function App() {
         <Stack.Screen name="FeatureNotDeveloped" component={FeatureNotDeveloped}/>
         <Stack.Screen name="FilterScreen" component={FilterScreen}/>
         <Stack.Screen name="SelectSeats" component={SelectSeatsScreen}/>
+        <Stack.Screen name="BoardingPass" component={BoardingPassScreen}/>
         
       </Stack.Navigator>
       </FilterProvider>
