@@ -4,7 +4,6 @@ import Header from '../Header';
 import FontLoader from "../FontLoader";
 import { InputInformation } from '../TransportBookingScreen/Passenger&Luggage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
 
 export default function SelectSeatsScreen() {
   const route = useRoute();
