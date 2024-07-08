@@ -48,6 +48,19 @@ const AccountScreen = () => {
     </TouchableOpacity>
   );
 
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        // Đăng xuất thành công, điều hướng đến màn hình đăng nhập
+        navigation.navigate('Welcome'); // Thay 'Login' bằng màn hình đăng nhập của bạn
+      })
+      .catch((error) => {
+        console.error('Error signing out: ', error);
+        // Hiển thị thông báo lỗi nếu có
+        Alert.alert('Error', 'Failed to log out. Please try again later.');
+      });
+  };
+
   const handlePress = (itemId) => {
     if (itemId === '1') {
       navigation.navigate('PersonalInformation');
@@ -76,7 +89,7 @@ const AccountScreen = () => {
           keyExtractor={item => item.id}
         />
 
-        <TouchableOpacity activeOpacity={0.4} style={styles.endSessionButton}>
+        <TouchableOpacity activeOpacity={0.4} style={styles.endSessionButton} onPress={handleLogout}>
           <Image source={require('../../assets/images/EndSessionIcon.png')} style={styles.endSessionIcon} />
           <Text style={styles.endSessionText}>End session</Text>
         </TouchableOpacity>

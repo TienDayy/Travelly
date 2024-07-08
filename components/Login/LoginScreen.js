@@ -73,6 +73,30 @@ const LoginScreen = () => {
           <Text style={[styles.textSignIn, { color: '#FFF' }]}>Sign in</Text>
         </TouchableOpacity>
 
+        <View style={{flexDirection: 'row', marginHorizontal: 16, marginTop: 16, justifyContent:'space-between'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{fontFamily: 'Poppins-Regular',
+                            fontSize: 14,
+                            fontWeight: '500',
+                            lineHeight: 20,
+                            color: '#050505'}}>New?</Text>
+            <TouchableOpacity style={{marginLeft: 8}} onPress={() => navigation.navigate('SignUp')}>
+              <Text style={{fontFamily: 'Poppins-Medium',
+                            fontSize: 16,
+                            fontWeight: '500',
+                            lineHeight: 24,
+                            color: '#01635D'}}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={{marginLeft: 91}} onPress={() => navigation.navigate('FeatureNotDeveloped')}>
+            <Text style={{fontFamily: 'Poppins-Medium',
+                            fontSize: 16,
+                            fontWeight: '500',
+                            lineHeight: 24,
+                            color: '#050505'}}>Forgot password?</Text>
+          </TouchableOpacity>
+        </View>
+
         <Modal
           animationType="slide"
           transparent={true}
