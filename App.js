@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnBoarding from './components/OnBoarding/OnBoarding';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import HomeBottomTab from './HomeBottomTab'
+import LoginStack from './LoginStack'
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +42,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {viewedOnboarding ? (
-          <Stack.Screen name='HomeBottomTab' component={HomeBottomTab} />
+          <Stack.Screen name='LoginStack' component={LoginStack} />
         ) : (
           <Stack.Screen name='OnBoarding'>
             {props => <OnBoarding {...props} setViewedOnboarding={setViewedOnboarding} />}

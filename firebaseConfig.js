@@ -1,20 +1,20 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCVLBNa69fAgrSEpky-bGQky9utyxUQTp8",
-  authDomain: "travelly-25ba3.firebaseapp.com",
-  projectId: "travelly-25ba3",
-  storageBucket: "travelly-25ba3.appspot.com",
-  messagingSenderId: "1056579220764",
-  appId: "1:1056579220764:android:810af1958885adfae1f6d9"
+  apiKey: 'AIzaSyCVLBNa69fAgrSEpky-bGQky9utyxUQTp8',
+  authDomain: 'travelly-25ba3.firebaseapp.com',
+  projectId: 'travelly-25ba3',
+  storageBucket: 'travelly-25ba3.appspot.com',
+  messagingSenderId: '1056579220764',
+  appId: '1:1056579220764:android:810af1958885adfae1f6d9',
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
-}
+const app = initializeApp(firebaseConfig);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
+});
 
-export default firebase;
+export { auth };
+export default app;

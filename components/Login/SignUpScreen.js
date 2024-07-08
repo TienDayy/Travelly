@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableWithoutFeedback, StyleSheet, Keyboard, TouchableOpacity, Modal } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../Header';
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
 
-  const handleAuthentication = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         navigation.navigate('HomeBottomTab');
@@ -37,8 +37,8 @@ const LoginScreen = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <Header title="" />
-        <Text style={styles.textWelcome}>Welcome back!</Text>
-        <Text style={styles.textWelcomeSmall}>Sign in and let’s get going</Text>
+        <Text style={styles.textWelcome}>Welcome to Travelly!</Text>
+        <Text style={styles.textWelcomeSmall}>Sign up and start your journey</Text>
 
         <TextInput
           style={[styles.input, { marginTop: 48 }]}
@@ -68,9 +68,9 @@ const LoginScreen = () => {
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#FEA36B', marginTop: 32 }]}
-          onPress={handleAuthentication}
+          onPress={handleSignUp}
         >
-          <Text style={[styles.textSignIn, { color: '#FFF' }]}>Sign in</Text>
+          <Text style={[styles.textSignIn, { color: '#FFF' }]}>Sign up</Text>
         </TouchableOpacity>
 
         <Modal
@@ -81,7 +81,7 @@ const LoginScreen = () => {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>Invalid email or password. Please try again.</Text>
+              <Text style={styles.modalText}>Failed to create an account. Please try again.</Text>
               <TouchableOpacity onPress={closeModal} style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>OK</Text>
               </TouchableOpacity>
@@ -177,4 +177,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUpScreen;
