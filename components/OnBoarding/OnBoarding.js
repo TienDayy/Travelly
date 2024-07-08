@@ -28,7 +28,7 @@ const OnBoarding = ({ setViewedOnboarding }) => {
             try {
                 await AsyncStorage.setItem('@viewedOnboarding', 'true');
                 setViewedOnboarding(true);
-                navigation.navigate('HomeBottomTab');
+                navigation.navigate('LoginStack');
             } catch (err) {
                 console.log('Error @setItem: ', err);
             }

@@ -27,7 +27,10 @@ export default function HomeScreen() {
   ];
 
   const IconItem = ({ item }) => (
-    <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('BookingStack')}>
+    <TouchableOpacity activeOpacity={0.4}   onPress={() => {
+      navigation.navigate('HomeBottomTab');
+      navigation.navigate(item.title);
+    }}>
       <Image source={item.image} style={styles.icon} />
       <Text style={styles.title}>{item.title}</Text>
     </TouchableOpacity>

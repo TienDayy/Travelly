@@ -16,6 +16,7 @@ export default function App() {
   return (
       <FilterProvider>
       <Stack.Navigator
+       initialRouteName="Booking"
         screenOptions={{
           headerShown: false,
         }}
