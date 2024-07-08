@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableWithoutFeedback, StyleSheet, Keyboard, TouchableOpacity, Modal } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import { db } from '../../firebaseConfig';
+import { ref, set } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../Header';
 
@@ -16,12 +18,22 @@ const SignUpScreen = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        // Cập nhật thông tin mặc định cho người dùng mới trong Realtime Database
+        const userRef = ref(db, `users/${user.uid}`);
+        set(userRef, {
+          firstName: 'Travelly',
+          lastName: 'User',
+          phoneNumber: '',
+          email: user.email,
+          image: 'https://firebasestorage.googleapis.com/v0/b/travelly-25ba3.appspot.com/o/PersonIcon.png?alt=media&token=97870f55-e76a-4ba8-a279-959820de8676', // Đường dẫn tới tấm ảnh mặc định
+        });
         navigation.navigate('HomeBottomTab');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setModalVisible(true); // Show modal on authentication error
+        console.log(errorMessage);
+        setModalVisible(true); // Hiển thị modal khi có lỗi xảy ra
       });
   };
 

@@ -1,13 +1,37 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StatusBar } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import FontLoader from "../FontLoader";
-import { UserContext } from './UserContext';
+import { auth } from '../../firebaseConfig';
+import { db } from '../../firebaseConfig';
+import { ref, get } from 'firebase/database';
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-  const { userFName, userLName, userImage } = useContext(UserContext);
+  const [userDetails, setUserDetails] = useState(null);
+
+  const fetchUserData = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      try {
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          setUserDetails(snapshot.val());
+        } else {
+          console.log('No data available');
+        }
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
 
   const data = [
     { id: '1', image: require('../../assets/images/AccountPersonIcon.png'), text: 'Personal information' },
@@ -32,15 +56,19 @@ const AccountScreen = () => {
     }
   };
 
+  if (!userDetails) {
+    return null;
+  }
+
   return (
     <FontLoader>
       <View style={styles.container}>
         <Text style={styles.headerStyle}>Account</Text>
         <Image
-          source={userImage ? { uri: userImage } : require('../../assets/images/PersonIcon.png')}
+          source={{ uri: userDetails.image || 'https://firebasestorage.googleapis.com/v0/b/travelly-25ba3.appspot.com/o/PersonIcon.png?alt=media&token=97870f55-e76a-4ba8-a279-959820de8676' }}
           style={styles.imageStyle}
         />
-        <Text style={styles.userNameStyle}>{userFName} {userLName}</Text>
+        <Text style={styles.userNameStyle}>{userDetails.firstName} {userDetails.lastName}</Text>
 
         <FlatList
           data={data}

@@ -1,32 +1,104 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity, StatusBar, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import FontLoader from "../FontLoader";
 import Header from '../Header';
-import { UserContext } from './UserContext';
+import { auth, db, storage } from '../../firebaseConfig';
+import { ref, get, update } from 'firebase/database';
+import { getDownloadURL, ref as storageRef, uploadBytesResumable } from 'firebase/storage';
 
 const PersonalInformationScreen = ({ navigation }) => {
-  const { userFName, setUserFName,
-    userLName, setUserLName,
-    userPhoneNum, setUserPhoneNum,
-    userEmail, setUserEmail,
-    userImage, setUserImage} = useContext(UserContext);
+  const [userDetails, setUserDetails] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    image: ''
+  });
 
-  const [newUserFName, setNewUserFName] = useState(userFName);
-  const [newUserLName, setNewUserLName] = useState(userLName);
-  const [newUserPhoneNum, setNewUserPhoneNum] = useState(userPhoneNum);
-  const [newUserEmail, setNewUserEmail] = useState(userEmail);
-  const [newUserImage, setNewUserImage] = useState(userImage);
+  const [newUserFName, setNewUserFName] = useState('');
+  const [newUserLName, setNewUserLName] = useState('');
+  const [newUserPhoneNum, setNewUserPhoneNum] = useState('');
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserImage, setNewUserImage] = useState('');
+  const [temporaryImage, setTemporaryImage] = useState('');
 
-  const handleSave = () => {
-    setUserFName(newUserFName);
-    setUserLName(newUserLName);
-    setUserPhoneNum(newUserPhoneNum);
-    setUserEmail(newUserEmail);
-    setUserImage(newUserImage);
-    navigation.goBack();
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      get(userRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setUserDetails(data);
+            setNewUserFName(data.firstName);
+            setNewUserLName(data.lastName);
+            setNewUserPhoneNum(data.phoneNumber);
+            setNewUserEmail(data.email);
+            setNewUserImage(data.image);
+          } else {
+            console.log('No data available');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching data: ', error);
+        });
+    }
+  }, []);
+
+  const handleSave = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      try {
+        await update(userRef, {
+          firstName: newUserFName,
+          lastName: newUserLName,
+          phoneNumber: newUserPhoneNum,
+          email: newUserEmail,
+        });
+  
+        // Nếu có hình ảnh mới được chọn
+        if (temporaryImage) {
+          const response = await fetch(temporaryImage);
+          const blob = await response.blob();
+  
+          const filename = temporaryImage.substring(temporaryImage.lastIndexOf('/') + 1);
+          const imageRef = storageRef(storage, `images/${filename}`);
+  
+          const uploadTask = uploadBytesResumable(imageRef, blob);
+  
+          uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+              // Progress of the upload can be handled here if needed
+            },
+            (error) => {
+              console.error('Error uploading image: ', error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                // Cập nhật URL hình ảnh mới vào Firestore
+                await update(userRef, {
+                  image: downloadURL
+                });
+                setNewUserImage(downloadURL); // Cập nhật lại newUserImage sau khi upload thành công
+                setTemporaryImage(''); // Xóa URL hình ảnh tạm thời sau khi đã upload
+                navigation.goBack(); // Quay lại màn hình trước đó sau khi hoàn thành
+              });
+            }
+          );
+        } else {
+          // Nếu không có hình ảnh mới thì không cần upload, chỉ đơn giản cập nhật thông tin người dùng
+          navigation.goBack(); // Quay lại màn hình trước đó
+        }
+      } catch (error) {
+        console.error('Error updating user details: ', error);
+      }
+    }
   };
-
+  
   const selectImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -34,9 +106,10 @@ const PersonalInformationScreen = ({ navigation }) => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    if (!result.canceled) {
-      setNewUserImage(result.assets[0].uri);
+  
+    if (!result.cancelled) {
+      const { uri } = result.assets[0];
+      setTemporaryImage(uri); // Lưu URL hình ảnh tạm thời
     }
   };
 
@@ -51,55 +124,55 @@ const PersonalInformationScreen = ({ navigation }) => {
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <Header title="Personal Information" />
             <Image
-                source={newUserImage ? { uri: newUserImage } : require('../../assets/images/PersonIcon.png')}
-                style={styles.imageStyle}
+              source={temporaryImage ? { uri: temporaryImage } : (newUserImage ? { uri: newUserImage } : require('../../assets/images/PersonIcon.png'))}
+              style={styles.imageStyle}
             />
 
             <TouchableOpacity style={styles.cameraIcon} onPress={selectImage}>
-                <Image source={require('../../assets/images/CameraPlusIcon.png')}
-                        style={{height: 28, width: 28, resizeMode: 'contain'}}
-                />
+              <Image source={require('../../assets/images/CameraPlusIcon.png')}
+                style={{ height: 28, width: 28, resizeMode: 'contain' }}
+              />
             </TouchableOpacity>
 
             <View style={styles.textInputStyle}>
-                <Text style={styles.smallText}>First Name</Text>
-                <TextInput
-                  style={styles.largeText}
-                  value={newUserFName}
-                  onChangeText={setNewUserFName}
-                />
+              <Text style={styles.smallText}>First Name</Text>
+              <TextInput
+                style={styles.largeText}
+                value={newUserFName}
+                onChangeText={setNewUserFName}
+              />
             </View>
 
             <View style={styles.textInputStyle}>
-                <Text style={styles.smallText}>Last Name</Text>
-                <TextInput
-                  style={styles.largeText}
-                  value={newUserLName}
-                  onChangeText={setNewUserLName}
-                />
+              <Text style={styles.smallText}>Last Name</Text>
+              <TextInput
+                style={styles.largeText}
+                value={newUserLName}
+                onChangeText={setNewUserLName}
+              />
             </View>
 
             <View style={styles.textInputStyle}>
-                <Text style={styles.smallText}>Phone</Text>
-                <TextInput
-                  style={styles.largeText}
-                  value={newUserPhoneNum}
-                  onChangeText={setNewUserPhoneNum}
-                  keyboardType='numeric'
-                />
+              <Text style={styles.smallText}>Phone</Text>
+              <TextInput
+                style={styles.largeText}
+                value={newUserPhoneNum}
+                onChangeText={setNewUserPhoneNum}
+                keyboardType='numeric'
+              />
             </View>
 
             <View style={styles.textInputStyle}>
-                <Text style={styles.smallText}>Email</Text>
-                <TextInput
-                  style={styles.largeText}
-                  value={newUserEmail}
-                  onChangeText={setNewUserEmail}
-                />
+              <Text style={styles.smallText}>Email</Text>
+              <TextInput
+                style={styles.largeText}
+                value={newUserEmail}
+                onChangeText={setNewUserEmail}
+              />
             </View>
 
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                <Text style={styles.saveText}>Save changes</Text>
+              <Text style={styles.saveText}>Save changes</Text>
             </TouchableOpacity>
 
           </ScrollView>
